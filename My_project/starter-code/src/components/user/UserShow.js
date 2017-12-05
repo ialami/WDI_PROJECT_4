@@ -4,6 +4,7 @@ import Auth from '../../lib/Auth';
 import Startup from '../startups/StartupUserShow';
 import Axios from 'axios';
 import _ from 'lodash';
+import SearchBar from '../utility/SearchBar';
 
 export default class UserShow extends Component {
 
@@ -77,6 +78,10 @@ export default class UserShow extends Component {
         <p>username: {this.state.user.username}</p>
         <p>id: {this.state.user.id}</p>
         <h2>Your startups</h2>
+        <SearchBar
+          handleSearch={this.handleSearch}
+          handleSort={this.handleSort}
+        />
         { startups.map(startup => <Startup key={startup.id}
           deleteStartup={this.deleteStartup}
           {...startup}/>
