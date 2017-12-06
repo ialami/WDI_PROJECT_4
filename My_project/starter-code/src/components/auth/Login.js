@@ -10,13 +10,12 @@ export default class Login extends Component {
       email: '',
       password: ''
     },
-    errors: {}
+    errors: ''
   };
 
 handleChange = ({ target: { name, value } }) => {
   const user = Object.assign({}, this.state.user, { [name]: value });
-  const errors = Object.assign({}, this.state.errors, { [name]: '' });
-  this.setState({ user, errors });
+  this.setState({ user, errors: '' });
 }
 
 handleSubmit = (e) => {
@@ -29,7 +28,10 @@ handleSubmit = (e) => {
       Auth.setToken(res.data.token);
       this.props.history.push('/');
     })
-    .catch(err => this.setState({ errors: err.response.data.errors }));
+    .catch(err =>{
+      console.dir(err);
+      this.setState({ errors: err.response.data.message });
+    });
 }
 
 render(){

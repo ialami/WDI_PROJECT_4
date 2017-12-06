@@ -1,6 +1,9 @@
 import React from 'react';
 
-const RegisterForm = ({ handleChange, handleSubmit, user }) => {
+const RegisterForm = ({ handleChange, handleSubmit, user, errors }) => {
+
+  const formInvalid = Object.keys(errors).some(key => errors[key]);
+
   return (
     <form onSubmit={handleSubmit}>
       <div>
@@ -20,6 +23,7 @@ const RegisterForm = ({ handleChange, handleSubmit, user }) => {
           onChange={handleChange}
           value={user.username}
         />
+        { errors && <small>{errors.username}</small>}
       </div>
       <div>
         <input
@@ -29,6 +33,7 @@ const RegisterForm = ({ handleChange, handleSubmit, user }) => {
           onChange={handleChange}
           value={user.email}
         />
+        { errors && <small>{errors.email}</small>}
       </div>
       <div>
         <input
@@ -38,6 +43,7 @@ const RegisterForm = ({ handleChange, handleSubmit, user }) => {
           onChange={handleChange}
           value={user.password}
         />
+        { errors && <small>{errors.password}</small>}
       </div>
       <div>
         <input
@@ -49,7 +55,11 @@ const RegisterForm = ({ handleChange, handleSubmit, user }) => {
         />
       </div>
 
-      <button>Register</button>
+      <button
+        disabled={formInvalid}
+      >
+        Register
+      </button>
     </form>
   );
 };

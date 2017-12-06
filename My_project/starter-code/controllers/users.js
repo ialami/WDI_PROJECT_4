@@ -58,10 +58,6 @@ function VerifyPassword(req, res, next){
     .exec()
     .then(user => {
 
-      //My information
-      console.log('user data', user);
-      console.log('req.body', req.body);
-
       //check if the user knows his old password
       const isOldPasswordRight = user.validatePassword(req.body.oldPassword);
 
@@ -69,7 +65,6 @@ function VerifyPassword(req, res, next){
         user.password = req.body.newPassword;
         user.passwordConfirmation = req.body.passwordConfirmation;
         user.save();
-        console.log('user is now saved', user);
         return res.status(200).json({ user });
       } else {
         return res.status(500).json({ message: 'Try again, did you forget your password?' });

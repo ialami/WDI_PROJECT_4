@@ -12,12 +12,14 @@ export default class Register extends Component {
       email: '',
       password: '',
       passwordConfirmation: ''
-    }
+    },
+    errors: {}
   };
 
   handleChange = ({ target: { name, value }}) => {
     const user = Object.assign({}, this.state.user, { [name]: value });
-    this.setState({ user });
+    const errors = Object.assign({}, this.state.errors, { [name]: '' });
+    this.setState({ user, errors });
   }
 
   handleSubmit = (e) => {
@@ -30,7 +32,10 @@ export default class Register extends Component {
         Auth.setToken(res.data.token);
         this.props.history.push('/');
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        this.setState({ errors: err.response.data.errors });
+        console.dir(err);
+      });
   }
 
   render(){
@@ -41,6 +46,7 @@ export default class Register extends Component {
           user={this.state.user}
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
+          errors={this.state.errors}
         />
       </div>
     );

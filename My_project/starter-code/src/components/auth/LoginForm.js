@@ -2,8 +2,6 @@ import React from 'react';
 
 const LoginForm = ({ handleChange, handleSubmit, user, errors }) => {
 
-  const formInvalid = Object.keys(errors).some(key => errors[key]);
-
   return (
     <form onSubmit={handleSubmit}>
       <div>
@@ -14,7 +12,6 @@ const LoginForm = ({ handleChange, handleSubmit, user, errors }) => {
           onChange={handleChange}
           value={user.email}
         />
-        {errors.email && <small>{errors.email}</small>}
       </div>
       <div>
         <input
@@ -24,10 +21,9 @@ const LoginForm = ({ handleChange, handleSubmit, user, errors }) => {
           onChange={handleChange}
           value={user.password}
         />
-        {errors.password && <small>{errors.password}</small>}
       </div>
+      <small>{errors}</small>
       <button
-        disabled={formInvalid}
       >
         Login
       </button>
