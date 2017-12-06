@@ -36,9 +36,10 @@ export default class StartupShow extends Component {
   componentDidMount(){
     console.log(this);
     Axios
-      .get(`/api/startups/${this.props.match.params.id}`)
+      .get(`/api/startups/${this.props.match.params.id}`, {
+        headers: {'Authorization': `Bearer ${Auth.getToken()}`}
+      })
       .then(res => this.setState({ startup: res.data }))
-      // .then(res => console.log(res.data))
       .catch(err => console.log(err));
   }
 

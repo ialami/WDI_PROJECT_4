@@ -9,7 +9,7 @@ router.route('/startups')
   .post(secureRoute, startUps.create);
 
 router.route('/startups/:id')
-  .get(startUps.show)
+  .get(secureRoute, startUps.show)
   .put(secureRoute, startUps.update)
   .delete(secureRoute, startUps.delete);
 
