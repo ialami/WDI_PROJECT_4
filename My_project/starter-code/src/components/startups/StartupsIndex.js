@@ -58,7 +58,20 @@ export default class StartupsIndex extends Component {
         </Row>
         <Row>
           { Auth.isAuthenticated() && <h2><Link to="/startups/new">Add a start-up</Link></h2> }
-          { startups.map(startup => <Startup key={startup.id} {...startup}/>) }
+          { startups.map(startup => {
+            return  <Col
+              key={startup.id}
+              lg={4} md={4} ls={12}
+              style={styles.card}
+            >
+              <Startup
+                {...startup}
+                // key={startup.id}
+                // style={styles.card}
+              />
+            </Col>;
+          })
+          }
         </Row>
       </Grid>
     );
@@ -71,15 +84,20 @@ const styles = {
     // paddingRight: '0'
   },
   header: {
-    border: '3px solid black',
+    // border: '3px solid black',
     margin: 'auto',
     padding: '10px',
     width: '100%',
     textAlign: 'center'
   },
   searchbar: {
-    border: '3px solid pink'
+    // border: '3px solid pink'
     // paddingLeft: '0',
     // marginLeft: '0'
+  },
+  card: {
+    // paddingRight: '0',
+    // paddingLeft: '0',
+    // border: '1px solid green'
   }
 };

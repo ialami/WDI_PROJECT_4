@@ -5,6 +5,7 @@ import Startup from '../startups/StartupUserShow';
 import Axios from 'axios';
 import _ from 'lodash';
 import SearchBar from '../utility/SearchBar';
+import { Grid, Row, Col } from 'react-bootstrap';
 
 export default class UserShow extends Component {
 
@@ -69,28 +70,39 @@ export default class UserShow extends Component {
     const startups = _.filter(orderedStartups, startup => regex.test([startup.name, startup.industry, startup.country]));
 
     return(
-      <div>
-        <h1>User profile page</h1>
-        <button><Link to={`/users/${this.props.match.params.id}/edit`}>Edit users</Link></button>
-        <button><Link to={`/users/${this.props.match.params.id}/edit/password`}>Reset password</Link></button>
-        <p>Full name: {this.state.user.fullName}</p>
-        <p>email: {this.state.user.email}</p>
-        <p>username: {this.state.user.username}</p>
-        <p>id: {this.state.user.id}</p>
-        <h2>Your startups</h2>
-        <SearchBar
-          handleSearch={this.handleSearch}
-          handleSort={this.handleSort}
-        />
-        { startups.map(startup => <Startup key={startup.id}
-          deleteStartup={this.deleteStartup}
-          {...startup}/>
-        )}
-      </div>
+      <Grid fluid>
+        <Row>
+          <Col lg={4} md={4} ls={4}>
+            <h1>Image</h1>
+          </Col>
+          <Col lg={8} md={8} ls={8}>
+            <p>Full name: {this.state.user.fullName}</p>
+            <p>email: {this.state.user.email}</p>
+            <p>username: {this.state.user.username}</p>
+            <p>id: {this.state.user.id}</p>
+            <button><Link to={`/users/${this.props.match.params.id}/edit`}>Edit users</Link></button>
+            <button><Link to={`/users/${this.props.match.params.id}/edit/password`}>Reset password</Link></button>
+          </Col>
+        </Row>
+        <Row>
+          <Col lg={12} md={12} ls={12}>
+            <h1>My connections</h1>
+          </Col>
+        </Row>
+        <Row>
+          <Col lg={12} md={12} ls={12}>
+            <h2>My startups</h2>
+            <SearchBar
+              handleSearch={this.handleSearch}
+              handleSort={this.handleSort}
+            />
+            { startups.map(startup => <Startup key={startup.id}
+              deleteStartup={this.deleteStartup}
+              {...startup}/>
+            )}
+          </Col>
+        </Row>
+      </Grid>
     );
   }
 }
-
-// Add edit link that links to edit page and delete button with a delete function
-
-//then go to Edit User profile
