@@ -851,6 +851,10 @@ boom@5.x.x:
   dependencies:
     hoek "4.x.x"
 
+bootstrap-css-only@^3.3.7:
+  version "3.3.7"
+  resolved "https://registry.yarnpkg.com/bootstrap-css-only/-/bootstrap-css-only-3.3.7.tgz#68a15925aa7b9b0fc0feb73ff85d8b8c3989c16d"
+
 brace-expansion@^1.1.7:
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.8.tgz#c07b211c7c952ec1f8efd51a77ef0d1d3990a292"
@@ -1341,7 +1345,7 @@ css-color-names@0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/css-color-names/-/css-color-names-0.0.4.tgz#808adc2e79cf84738069b646cb20ec27beb629e0"
 
-css-loader@^0.28.4:
+css-loader@^0.28.7:
   version "0.28.7"
   resolved "https://registry.yarnpkg.com/css-loader/-/css-loader-0.28.7.tgz#5f2ee989dd32edd907717f953317656160999c1b"
   dependencies:
@@ -4167,6 +4171,12 @@ react-overlays@^0.7.4:
     prop-types "^15.5.10"
     prop-types-extra "^1.0.1"
     warning "^3.0.0"
+
+react-router-bootstrap@^0.24.4:
+  version "0.24.4"
+  resolved "https://registry.yarnpkg.com/react-router-bootstrap/-/react-router-bootstrap-0.24.4.tgz#6e89481d8a8979649a0dd4535e4a68df4a3d0b12"
+  dependencies:
+    prop-types "^15.5.10"
 
 react-router-dom@^4.2.2:
   version "4.2.2"
