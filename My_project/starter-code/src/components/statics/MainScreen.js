@@ -1,13 +1,21 @@
 import React from 'react';
 import MainScreenButtons from './MainScreenButtons';
+import { Grid, Row, Col } from 'react-bootstrap';
 
 const MainScreen = () => {
   return(
-    <div style={styles.homepageText}>
-      <h1 style={styles.header}>New partners, new opportunities ...</h1>
-      <h2 style={styles.subheader}>Develop your business and partner with start-ups all over the world</h2>
-      <MainScreenButtons />
-    </div>
+    <Grid>
+      <Row>
+        <Col
+          xs={12} md={12} lg={12}
+          style={styles.homepageText}
+        >
+          <h1 style={styles.header}>New partners, new opportunities ...</h1>
+          <h2 style={styles.subheader}>Develop your business and partner with start-ups all over the world</h2>
+          <MainScreenButtons />
+        </Col>
+      </Row>
+    </Grid>
   );
 };
 
@@ -15,7 +23,7 @@ export default MainScreen;
 
 const styles = {
   homepageText: {
-    width: '1000px',
+    width: '100%',
     height: '500px',
     position: 'absolute',
     margin: 'auto',
@@ -25,7 +33,7 @@ const styles = {
     fontSize: '100px',
     fontWeight: 'bold',
     borderRadius: '10px',
-    padding: '20px'
+    // padding: '20px'
     // color: 'white'
   },
   header: {

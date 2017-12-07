@@ -65,8 +65,10 @@ export default withRouter(Navigationbar);
 const styles = {
   navbar: {
     borderRadius: '0',
+    border: '3px solid red',
     background: 'rgba(0, 0, 0, 0.7)',
-    color: 'rgba(255, 255, 255, 1)!important'
+    color: 'rgba(255, 255, 255, 1)!important',
+    marginBottom: '0'
   },
   brandContainer: {
     fontSize: '2rem',
