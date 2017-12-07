@@ -5,7 +5,8 @@ import Startup from '../startups/StartupUserShow';
 import Axios from 'axios';
 import _ from 'lodash';
 import SearchBar from '../utility/SearchBar';
-import { Grid, Row, Col } from 'react-bootstrap';
+import { Grid, Row, Col, Image, Button } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 export default class UserShow extends Component {
 
@@ -71,17 +72,29 @@ export default class UserShow extends Component {
 
     return(
       <Grid fluid>
+        <h1 style={styles.myprofile}>My profile</h1>
         <Row>
-          <Col lg={4} md={4} ls={4}>
-            <h1>Image</h1>
+          <Col
+            lg={4} md={4} ls={4}
+            style={styles.imagecontainer}
+          >
+            <Image src=""/>
           </Col>
           <Col lg={8} md={8} ls={8}>
             <p>Full name: {this.state.user.fullName}</p>
             <p>email: {this.state.user.email}</p>
             <p>username: {this.state.user.username}</p>
             <p>id: {this.state.user.id}</p>
-            <button><Link to={`/users/${this.props.match.params.id}/edit`}>Edit users</Link></button>
-            <button><Link to={`/users/${this.props.match.params.id}/edit/password`}>Reset password</Link></button>
+            <LinkContainer style={styles.buttons} to={`/users/${this.props.match.params.id}/edit`}>
+              <Button>
+                Update details
+              </Button>
+            </LinkContainer>
+            <LinkContainer style={styles.buttons} to={`/users/${this.props.match.params.id}/edit/password`}>
+              <Button>
+                Update password
+              </Button>
+            </LinkContainer>
           </Col>
         </Row>
         <Row>
@@ -106,3 +119,20 @@ export default class UserShow extends Component {
     );
   }
 }
+
+const styles = {
+  myprofile: {
+    margin: 'auto',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '40px 0 40px 0'
+  },
+  imagecontainer: {
+    border: '3px solid green',
+    height: '100%'
+  },
+  buttons: {
+    margin: '0 10px 10px 0'
+  }
+};
