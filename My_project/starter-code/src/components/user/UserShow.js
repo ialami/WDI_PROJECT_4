@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import Auth from '../../lib/Auth';
 import Startup from '../startups/StartupUserShow';
 import Axios from 'axios';
@@ -7,7 +6,7 @@ import _ from 'lodash';
 import SearchBar from '../utility/SearchBar';
 import { Grid, Row, Col, Image, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import UserEdit from './UserEdit';
+import UserForm from './UserForm';
 
 export default class UserShow extends Component {
 
@@ -69,13 +68,35 @@ export default class UserShow extends Component {
     this.setState({ boolean: !this.state.boolean });
   }
 
+  handleChange = ({ target: { name, value }}) => {
+    const user = Object.assign( {}, this.state.user, { [name]: value });
+    this.setState({ user });
+  }
+
+  handleSubmit = e => {
+    e.preventDefault();
+console.log('form submitted');
+
+    const userId = Auth.getCurrentUser();
+    Axios
+      .put(`/api/users/${userId}`, this.state.user, {
+        headers: {'Authorization': `Bearer ${Auth.getToken()}`}
+      })
+      .then(() => {
+        this.switchBoolean();
+// console.log('this.state.user', this.state.user);
+        // return this.state.switchBoolean;
+      })
+      .catch(err => console.error(err));
+  }
+
   render(){
     const { sortBy, sortDirection, query, boolean } = this.state;
     const regex = new RegExp(query, 'i');
 
     const orderedStartups = _.orderBy(this.state.startups, [sortBy], [sortDirection]);
     const startups = _.filter(orderedStartups, startup => regex.test([startup.name, startup.industry, startup.country]));
-console.log('boolean in user show', this.state.boolean);
+
     return(
       <Grid fluid>
         <h1 style={styles.myprofile}>My profile</h1>
@@ -104,7 +125,14 @@ console.log('boolean in user show', this.state.boolean);
               </LinkContainer>
             </div>
             }
-            { !boolean && <UserEdit switchBoolean={this.switchBoolean}/>}
+            { !boolean && <UserForm
+              handleChange={this.handleChange}
+              handleSubmit={this.handleSubmit}
+              user={this.state.user}
+              history={this.props.history}
+              switchBoolean={this.switchBoolean}
+            />
+            }
           </Col>
         </Row>
         <Row>

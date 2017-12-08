@@ -2,7 +2,10 @@ import React from 'react';
 import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap'
 
 const UserForm = ({ handleChange, handleSubmit, user, switchBoolean }) => {
-
+console.log('switchBoolean in user form', switchBoolean);
+console.log('handleSubmit', handleSubmit);
+  // const form = document.getElementsByTagName('form');
+  // document.body.appendChild(form);
   return(
     <div>
       <form
@@ -11,7 +14,7 @@ const UserForm = ({ handleChange, handleSubmit, user, switchBoolean }) => {
         <FormGroup
           // controlId="formBasicText"
           // validationState={handleSubmit}
-          onSubmit={handleSubmit}
+          // onSubmit={handleSubmit}
         >
           <FormControl
             type="text"
@@ -39,7 +42,7 @@ const UserForm = ({ handleChange, handleSubmit, user, switchBoolean }) => {
             onChange={handleChange}
           />
           <button
-            onClick={switchBoolean}
+            // onClick={switchBoolean}
             className="btn btn-primary"
           >
             Save
