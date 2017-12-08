@@ -46,16 +46,7 @@ export default class StartupShow extends Component {
   render(){
     return(
       <div>
-        <h1>Show page</h1>
-        <BackButton />
-        { ( Auth.isAuthenticated() && ( Auth.getCurrentUser() === this.state.startup.createdBy ) ) && <Link to={`/startups/${this.state.startup.id}/edit`}>
-          <p>Edit</p>
-        </Link> }
-        {' '}
-        { ( Auth.isAuthenticated() && ( Auth.getCurrentUser() === this.state.startup.createdBy ) ) && <button onClick={this.deleteStartup}>
-          Delete
-        </button> }
-        { this.state.startup && <Startup {...this.state.startup}/> }
+        { this.state.startup && <Startup {...this.state.startup} deleteStartup={this.deleteStartup}/> }
       </div>
     );
   }

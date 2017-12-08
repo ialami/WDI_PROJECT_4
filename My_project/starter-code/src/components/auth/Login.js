@@ -36,15 +36,12 @@ handleSubmit = (e) => {
 
 render(){
   return(
-    <div>
-      <h1>Login page</h1>
-      <LoginForm
-        user={this.state.user}
-        handleChange={this.handleChange}
-        handleSubmit={this.handleSubmit}
-        errors={this.state.errors}
-      />
-    </div>
+    <LoginForm
+      user={this.state.user}
+      handleChange={this.handleChange}
+      handleSubmit={this.handleSubmit}
+      errors={this.state.errors}
+    />
   );
 }
 

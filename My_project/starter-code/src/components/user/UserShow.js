@@ -93,7 +93,7 @@ console.log('boolean in user show', this.state.boolean);
               <p>email: {this.state.user.email}</p>
               <p>username: {this.state.user.username} - id: {this.state.user.id}</p>
               {/* <LinkContainer style={styles.buttons} to={`/users/${this.props.match.params.id}/edit`}> */}
-              <Button onClick={this.switchBoolean}>
+              <Button style={styles.button} onClick={this.switchBoolean}>
                 Update details
               </Button>
               {/* </LinkContainer> */}
@@ -142,7 +142,8 @@ const styles = {
     border: '3px solid green',
     height: '100%'
   },
-  buttons: {
-    margin: '0 10px 10px 0'
+  button: {
+    width: '150px',
+    margin: '10px'
   }
 };

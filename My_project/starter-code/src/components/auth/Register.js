@@ -40,15 +40,12 @@ export default class Register extends Component {
 
   render(){
     return(
-      <div>
-        <h1>Register page</h1>
-        <RegisterForm
-          user={this.state.user}
-          handleChange={this.handleChange}
-          handleSubmit={this.handleSubmit}
-          errors={this.state.errors}
-        />
-      </div>
+      <RegisterForm
+        user={this.state.user}
+        handleChange={this.handleChange}
+        handleSubmit={this.handleSubmit}
+        errors={this.state.errors}
+      />
     );
   }
 }

@@ -10,7 +10,7 @@ const StartupsForm = ({ handleChange, handleSubmit, startup, errors }) => {
     <form
       onSubmit={handleSubmit}
       style={styles.container}
-    >  
+    >
       <BackButton />
       <FormGroup
       >
@@ -180,7 +180,7 @@ const StartupsForm = ({ handleChange, handleSubmit, startup, errors }) => {
             className="btn btn-primary"
             style={styles.button}
           >
-            Add
+            Save
           </button>
         </div>
       </FormGroup>
