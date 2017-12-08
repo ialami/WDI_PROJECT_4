@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 import StartupsForm from './StartupsForm';
-import BackButton from '../utility/BackButton';
 import Auth from '../../lib/Auth';
 
 export default class StartupsNew extends Component {
@@ -43,8 +42,7 @@ export default class StartupsNew extends Component {
   render(){
     return(
       <div>
-        <h1>Add a new start-up</h1>
-        <BackButton />
+        <h1 style={styles.title}>Add a start-up</h1>
         <StartupsForm
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
@@ -56,3 +54,11 @@ export default class StartupsNew extends Component {
   }
 
 }
+
+const styles = {
+  title: {
+    // border: '2px solid black',
+    textAlign: 'center',
+    margin: '10px 0'
+  }  
+};

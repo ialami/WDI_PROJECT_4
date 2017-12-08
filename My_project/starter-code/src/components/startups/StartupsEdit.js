@@ -25,7 +25,9 @@ export default class StartupsEdit extends Component {
 
   componentDidMount() {
     Axios
-      .get(`/api/startups/${this.props.match.params.id}`)
+      .get(`/api/startups/${this.props.match.params.id}`, {
+        headers: {'Authorization': `Bearer ${Auth.getToken()}`}
+      })
       .then(res => this.setState({ startup: res.data }))
       .catch(err => console.log(err));
   }
@@ -48,6 +50,7 @@ export default class StartupsEdit extends Component {
   }
 
   render(){
+  console.log(this);
     return(
       <div>
         <h1>Edit startup</h1>

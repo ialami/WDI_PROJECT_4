@@ -7,6 +7,7 @@ import _ from 'lodash';
 import SearchBar from '../utility/SearchBar';
 import { Grid, Row, Col, Image, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import UserEdit from './UserEdit';
 
 export default class UserShow extends Component {
 
@@ -15,7 +16,8 @@ export default class UserShow extends Component {
     startups: [],
     query: '',
     sortBy: 'date',
-    sortDirection: 'desc'
+    sortDirection: 'desc',
+    boolean: true
   }
 
   getUser(){
@@ -63,13 +65,17 @@ export default class UserShow extends Component {
     this.setState({ sortBy, sortDirection });
   }
 
+  switchBoolean = () => {
+    this.setState({ boolean: !this.state.boolean });
+  }
+
   render(){
-    const { sortBy, sortDirection, query } = this.state;
+    const { sortBy, sortDirection, query, boolean } = this.state;
     const regex = new RegExp(query, 'i');
 
     const orderedStartups = _.orderBy(this.state.startups, [sortBy], [sortDirection]);
     const startups = _.filter(orderedStartups, startup => regex.test([startup.name, startup.industry, startup.country]));
-
+console.log('boolean in user show', this.state.boolean);
     return(
       <Grid fluid>
         <h1 style={styles.myprofile}>My profile</h1>
@@ -81,20 +87,24 @@ export default class UserShow extends Component {
             <Image src=""/>
           </Col>
           <Col lg={8} md={8} ls={8}>
-            <p>Full name: {this.state.user.fullName}</p>
-            <p>email: {this.state.user.email}</p>
-            <p>username: {this.state.user.username}</p>
-            <p>id: {this.state.user.id}</p>
-            <LinkContainer style={styles.buttons} to={`/users/${this.props.match.params.id}/edit`}>
-              <Button>
+
+            { boolean && <div>
+              <p>Full name: {this.state.user.fullName}</p>
+              <p>email: {this.state.user.email}</p>
+              <p>username: {this.state.user.username} - id: {this.state.user.id}</p>
+              {/* <LinkContainer style={styles.buttons} to={`/users/${this.props.match.params.id}/edit`}> */}
+              <Button onClick={this.switchBoolean}>
                 Update details
               </Button>
-            </LinkContainer>
-            <LinkContainer style={styles.buttons} to={`/users/${this.props.match.params.id}/edit/password`}>
-              <Button>
-                Update password
-              </Button>
-            </LinkContainer>
+              {/* </LinkContainer> */}
+              <LinkContainer style={styles.buttons} to={`/users/${this.props.match.params.id}/edit/password`}>
+                <Button>
+                  Update password
+                </Button>
+              </LinkContainer>
+            </div>
+            }
+            { !boolean && <UserEdit switchBoolean={this.switchBoolean}/>}
           </Col>
         </Row>
         <Row>

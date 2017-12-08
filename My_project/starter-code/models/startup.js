@@ -3,31 +3,31 @@ const mongoose = require('mongoose');
 const startupSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: 'Please provide the start-up\'s name'
+    required: 'Name field is required.'
   },
   description: {
     type: String,
-    required: 'Please provide the start-up\'s description'
+    required: 'Description field is required.'
   },
   industry: {
     type: String,
-    required: 'Please provide the start-up\'s industry'
+    required: 'Industry field is required.'
   },
   founders: {
     type: String,
-    required: 'Please provide the start-up\'s founders'
+    required: 'Founders field is required'
   },
   date: {
     type: Number,
-    required: 'Please provide the start-up\'s fouded year'
+    required: 'Founded year field is required'
   },
   country: {
     type: String,
-    required: 'Please provide the start-up\'s country'
+    required: 'Country field is required'
   },
   image: {
     type: String,
-    required: 'Please provide the start-up\'s image'
+    required: 'Image field is required'
   },
   incubator: {
     type: String
@@ -35,15 +35,15 @@ const startupSchema = new mongoose.Schema({
   },
   partnering: {
     type: String,
-    required: 'Please provide the start-up\'s partnering strategy'
+    required: 'Partnering strategy field is required'
   },
   website: {
     type: String,
-    required: 'Please provide the start-up\'s website url'
+    required: 'Website URL field is required'
   },
   fundingtype: {
     type: String,
-    required: 'Please provide the start-up\'s latest funding stage'
+    required: 'Latest funding stage is required'
   },
   createdBy: {
     type: mongoose.Schema.ObjectId,

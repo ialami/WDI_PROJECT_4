@@ -1,52 +1,77 @@
 import React from 'react';
 import BackButton from '../utility/BackButton';
+import { FormGroup, FormControl } from 'react-bootstrap';
 
 const UserEditPasswordForm = ({ handleChange, handleSubmit, passwords }) => {
   return(
     <div>
-      <h1>Form</h1>
-      <BackButton />
-      <div>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <input
-              type="text"
-              id="oldPassword"
-              name="oldPassword"
-              placeholder="Enter old password"
-              value={passwords.oldPassword}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <input
-              type="text"
-              id="newPassword"
-              name="newPassword"
-              placeholder="Enter new password"
-              value={passwords.newPassword}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <input
-              type="text"
-              id="passwordConfirmation"
-              name="passwordConfirmation"
-              placeholder="Re-enter new password"
-              value={passwords.passwordConfirmation}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <button>
-              Save
+      <h1 style={styles.title}>Reset password</h1>
+      <BackButton/>
+      <form
+        onSubmit={handleSubmit}
+      >
+        <FormGroup>
+          <FormControl
+            type="text"
+            id="oldPassword"
+            name="oldPassword"
+            placeholder="Enter old password"
+            value={passwords.oldPassword}
+            onChange={handleChange}
+            style={styles.input}
+          />
+          <FormControl
+            type="text"
+            id="newPassword"
+            name="newPassword"
+            placeholder="Enter new password"
+            value={passwords.newPassword}
+            onChange={handleChange}
+            style={styles.input}
+          />
+          <FormControl
+            type="text"
+            id="passwordConfirmation"
+            name="passwordConfirmation"
+            placeholder="Confirm new password"
+            value={passwords.passwordConfirmation}
+            onChange={handleChange}
+            style={styles.input}
+          />
+          <div style={styles.buttoncontainer}>
+            <button
+              className="btn btn-primary"
+              style={styles.button}
+            >
+              Reset
             </button>
           </div>
-        </form>
-      </div>
+        </FormGroup>
+      </form>
     </div>
   );
 };
 
 export default UserEditPasswordForm;
+
+const styles = {
+  title: {
+    // border: '2px solid black',
+    textAlign: 'center',
+    margin: '10px 0'
+  },
+  goback: {
+    marginLeft: '10px'
+  },
+  input: {
+    margin: '15px auto',
+    width: '400px',
+    textAlign: 'center'
+  },
+  buttoncontainer: {
+    textAlign: 'center'
+  },
+  button: {
+    width: '400px'
+  }
+};

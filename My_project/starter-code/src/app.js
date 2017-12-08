@@ -49,13 +49,13 @@ class App extends Component {
 
 const styles = {
   container: {
-    border: '5px solid green'
+    // border: '5px solid green'
   },
   header: {
-    border: '5px solid pink'
+    // border: '5px solid pink'
   },
   main: {
-    border: '5px solid yellow'
+    // border: '5px solid yellow'
   },
   ads: {
     // float: 'left',

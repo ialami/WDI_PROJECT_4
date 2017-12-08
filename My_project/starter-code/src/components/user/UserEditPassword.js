@@ -33,7 +33,6 @@ export default class UserEditPassword extends Component {
   render(){
     return(
       <div>
-        <h1>Reset password</h1>
         <UserEditPasswordForm
           passwords ={this.state.passwords}
           handleChange={this.handleChange}
