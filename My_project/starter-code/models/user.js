@@ -19,7 +19,8 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String, required: 'Please provide a password'
-  }
+  },
+  friends: []
 });
 
 userSchema
@@ -38,13 +39,49 @@ userSchema
   .virtual('passwordConfirmation')
   .set(setPasswordConfirmation);
 
-// userSchema
-//   .path(['email', 'password'])
-//   .validate(validLogin);
-
 userSchema.pre('save', hashPassword);
 
 userSchema.methods.validatePassword = validatePassword;
+//
+// userSchema
+//   .path('friends')
+//   .set(addFriend);
+
+userSchema.methods.addFriend = addFriend;
+
+// userSchema.pre('init',checkFriends);
+
+// async function checkFriends() {
+//   const user = this;
+//   // console.log(user._id);
+//   const promise = new Promise((resolve, reject) => {
+//     user
+//       .model('Request')
+//       .find({ $or: [
+//         {sender: user._id, status: 'pending'},
+//         {receiver: user._id, status: 'pending'}
+//       ]})
+//       .exec()
+//       .then(requests => {
+//         const friends = requests.map(request => request.id);
+//         // console.log(self.friends);
+//         return resolve(friends);
+//       })
+//       .catch(reject);
+//   });
+//
+//   const friends = await promise;
+//   user.friends = friends;
+//   // return friends;
+// }
+
+// userSchema.virtual('myFriends', {
+//   ref: 'Request',
+//   localField: '_id',
+//   foreignField: 'sender'
+// });
+//
+
 
 module.exports = mongoose.model('User', userSchema);
 
@@ -80,4 +117,9 @@ function validateEmail(email) {
 
 function validateUsername(username){
   if (username.indexOf(' ') > 0) return this.invalidate('username', 'Username must not contain white spaces.');
+}
+
+// //pushing the friend's id in the friends array
+function addFriend(friend) {
+  this.friends.push(friend);
 }

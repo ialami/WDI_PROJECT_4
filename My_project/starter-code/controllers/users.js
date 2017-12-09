@@ -4,6 +4,7 @@ const Startup = require('../models/startup');
 function usersIndex(req, res) {
   User
     .find()
+    // .populate('myFriends')
     .exec()
     .then(users => res.status(200).json(users))
     .catch(() => res.status(500).json({ message: 'Something went wrong.' }));

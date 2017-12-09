@@ -49,13 +49,27 @@ const startUpData = [{
   fundingtype: 'Series B'
 }];
 
-const userData = [{
-  fullName: 'Ismail Alami',
-  username: 'Isma',
-  email: 'ismail@ismail.com',
-  password: 'password',
-  passwordConfirmation: 'password'
-}];
+const userData = [
+  { fullName: 'Ismail Alami',
+    username: 'Isma',
+    email: 'ismail@ismail.com',
+    password: 'password',
+    passwordConfirmation: 'password'
+  },
+  { fullName: 'Marta Mattioli',
+    username: 'Martapz',
+    email: 'marta@marta.com',
+    password: 'password',
+    passwordConfirmation: 'password'
+  },
+  { fullName: 'Rane Gowan',
+    username: 'RG',
+    email: 'rane@rane.com',
+    password: 'password',
+    passwordConfirmation: 'password'
+  }
+
+];
 
 mongoose.connect(dbURI, { useMongoClient: true })
   .then(db => db.dropDatabase())

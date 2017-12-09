@@ -75,18 +75,13 @@ export default class UserShow extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-console.log('form submitted');
 
     const userId = Auth.getCurrentUser();
     Axios
       .put(`/api/users/${userId}`, this.state.user, {
         headers: {'Authorization': `Bearer ${Auth.getToken()}`}
       })
-      .then(() => {
-        this.switchBoolean();
-// console.log('this.state.user', this.state.user);
-        // return this.state.switchBoolean;
-      })
+      .then(() => this.switchBoolean())
       .catch(err => console.error(err));
   }
 
@@ -113,11 +108,9 @@ console.log('form submitted');
               <p>Full name: {this.state.user.fullName}</p>
               <p>email: {this.state.user.email}</p>
               <p>username: {this.state.user.username} - id: {this.state.user.id}</p>
-              {/* <LinkContainer style={styles.buttons} to={`/users/${this.props.match.params.id}/edit`}> */}
               <Button style={styles.button} onClick={this.switchBoolean}>
                 Update details
               </Button>
-              {/* </LinkContainer> */}
               <LinkContainer style={styles.buttons} to={`/users/${this.props.match.params.id}/edit/password`}>
                 <Button>
                   Update password
