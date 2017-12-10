@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const Startup = require('../models/startup');
+const _ = require('lodash');
 
 function usersIndex(req, res) {
   User
@@ -27,7 +28,6 @@ function usersUpdate(req, res, next) {
     .findByIdAndUpdate(req.params.id, req.body, { new: true })
     .exec()
     .then(user => {
-      // console.log(user);
       if (!user) return res.status(404).json({ message: 'User not found.' });
       return res.status(200).json({ user });
     })
@@ -74,11 +74,65 @@ function VerifyPassword(req, res, next){
     .catch(next);
 }
 
+function commonFriends(req, res, next){
+
+  User
+    .findById(req.params.id)
+    .exec()
+    .then(user => {
+      const userFriends = user.friends;
+
+      const filtereduserFriends = userFriends.map(friend => {
+        delete friend.startups;
+        delete friend.friends;
+        delete friend.password;
+        delete friend.__v;
+        return friend;
+      });
+
+      User
+        .findById(req.params.with)
+        .exec()
+        .then(friend => {
+          const friendFriends = friend.friends;
+
+          console.log('userFriends', userFriends);
+          console.log('friendFriends', friendFriends);
+
+          const filteredfriendFriends = friendFriends.map(friend => {
+            delete friend.startups;
+            delete friend.friends;
+            delete friend.password;
+            delete friend.__v;
+            return friend;
+          });
+          console.log('filteredfriendFriends without startups', filteredfriendFriends);
+          console.log('filtereduserFriends without startups', filtereduserFriends);
+
+          const commonFriends = [];
+
+          for (let i = 0; i < filteredfriendFriends.length; i++) {
+            for(let j = 0; j < filtereduserFriends.length; j++){
+              if(_.isEqual(filteredfriendFriends[i], filtereduserFriends[j])) {
+                console.log(filteredfriendFriends[i]);
+                commonFriends.push(filteredfriendFriends[i]);
+              }
+            }
+          }
+          console.log(commonFriends);
+          return res.json(commonFriends);
+        })
+        .catch(next);
+    })
+    .catch(next);
+}
+
 module.exports = {
   index: usersIndex,
   show: usersShow,
   update: usersUpdate,
   delete: usersDelete,
   showStartups: showStartups,
-  verifyPassword: VerifyPassword
+  verifyPassword: VerifyPassword,
+  commonFriends: commonFriends
 };

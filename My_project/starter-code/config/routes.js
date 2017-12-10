@@ -31,6 +31,8 @@ router.route('/users/:id/passwords')
   .put(users.verifyPassword);
 router.route('/users/:id/startups')
   .get(users.showStartups);
+router.route('/users/:id/commonfriends/:with')
+  .get(users.commonFriends);
 
 router.route('/requests')
   .get(secureRoute, requests.getRequests);
@@ -38,18 +40,8 @@ router.route('/requests/:id')
   .put(secureRoute, requests.acceptRequest);
 router.route('/addfriend/:id')
   .post(secureRoute, requests.addFriend);
-  // .put(secureRoute, requests.acceptRequest);
 
 router.route('/*')
   .all((req, res) => res.notFound());
 
 module.exports = router;
-
-/*
-{
-	"text": "friend request from marta to ismail",
-	"sender": "5a2abcf156e80c05be2114f2",
-	"receiver": "5a2abcf156e80c05be2114f1",
-	"status": "pending"
-}
-*/

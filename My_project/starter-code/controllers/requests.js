@@ -36,17 +36,17 @@ function getRequests(req, res, next){
     .catch(next);
 }
 
-function acceptFriend(req, res){
+function acceptFriend(req){
   return new Promise((resolve, reject) => {
     Request
       .findByIdAndUpdate(req.params.id, req.body)
       .exec()
       .then(friendRequest => {
-        friendRequest = Object.assign(friendRequest, req.body);
+        // friendRequest = Object.assign(friendRequest, req.body);
+        friendRequest = Object.assign(friendRequest, { status: 'accepted' });
         return friendRequest.save();
       })
       .then(friendRequest => {
-        // res.json(friendRequest);
         resolve(friendRequest);
       })
       .catch(reject);
@@ -56,7 +56,6 @@ function acceptFriend(req, res){
 function acceptRequest(req, res, next){
   return acceptFriend(req, res)
     .then(friendRequest => {
-      // console.log('friendRequest', friendRequest);
       const sender = friendRequest.sender;
       const receiver = friendRequest.receiver;
 
@@ -69,6 +68,7 @@ function acceptRequest(req, res, next){
               // console.log('this is the receiver before pushing:', receiver);
               receiver.friends.push(sender);
               // console.log('this is the receiver after pushing:', receiver);
+              receiver.save();
               return res.json([friendRequest, sender, receiver]);
             })
             .catch(next);
@@ -84,6 +84,7 @@ function acceptRequest(req, res, next){
               console.log('this is the sender before pushing:', sender);
               sender.friends.push(receiver);
               console.log('this is the sender after pushing:', sender);
+              return sender.save();
             })
             .catch(next);
         })
@@ -93,55 +94,6 @@ function acceptRequest(req, res, next){
     })
     .catch(next);
 }
-//
-// function acceptRequest(req, res, next){
-//   Request
-//     .findByIdAndUpdate(req.params.id, req.body)
-//     .exec()
-//     .then(acceptedRequest => {
-//       acceptedRequest = Object.assign(acceptedRequest, req.body);
-//       // acceptedRequest = Object.assign(acceptedRequest, { status: 'accepted' });
-//       return [acceptedRequest.save(), acceptedRequest, 'hey man'];
-//     })
-//     .then((res) => {
-// // console.log('req.body', req.body);
-// // console.log('res', res);
-// console.log('res[1]', res[1]);
-// // console.log('res[1].receiver', res[1].receiver);
-// // console.log('res[1].sender', res[1].sender);
-//       const receiverId = res[1].receiver;
-//       // const currentUser = () => {
-//       //   return GetCurrentUser(receiverId);
-//       // };
-//       // const currentUser = GetCurrentUser(receiverId);
-//       const currentUser = GetCurrentUser.resolve(receiverId);
-// //         .then(currentUser => {
-// // console.log('response from .then', currentUser);
-// //           return currentUser;
-// //         });
-// console.log('currentUser in controller', currentUser);
-//       return currentUser;
-//     })
-// //     .then(acceptedRequest => {
-// //       User
-// //         .findById({ _id: acceptedRequest.receiver })
-// //         // .findById({$and: [ // ERR: can't set headers after they are sent
-// //         //   { _id: acceptedRequest.receiver },
-// //         //   { _id: acceptedRequest.sender }
-// //         // ]})
-// //         .exec()
-// //         .then(users => {
-// // // console.log('users in promise', users);
-// //           // return users;
-// //         })
-// //         .catch(next);
-// //
-// // // console.log('Currentuser outside promise', Currentuser);
-// // // console.log('acceptedRequest', acceptedRequest);
-// //     })
-//     .then(acceptedRequest => res.json(acceptedRequest))
-//     .catch(next);
-// }
 
 const getReceiver = (receiverId) => {
   return new Promise((resolve, reject) => {
@@ -149,7 +101,6 @@ const getReceiver = (receiverId) => {
       .findById({ _id: receiverId })
       .exec()
       .then(Currentuser => {
-// console.log('Currentuser in promise', Currentuser);
         return resolve(Currentuser);
       })
       .catch(reject);
@@ -162,7 +113,6 @@ const getSender = (senderId) => {
       .findById({ _id: senderId })
       .exec()
       .then(sender => {
-// console.log('sender in getSender', sender);
         return resolve(sender);
       })
       .catch(reject);
@@ -174,22 +124,3 @@ module.exports = {
   getRequests: getRequests,
   acceptRequest: acceptRequest
 };
-//
-// -----
-//
-// User
-//   .findById({ _id: acceptedRequest.receiver })
-//   .exec()
-//   .then(Currentuser => {
-//     User
-//       .findById({ _id: acceptedRequest.sender })
-//       .exec()
-//       .then(sender => {
-//         return sender;
-//       })
-//       .catch(next);
-//     console.log('Currentuser', Currentuser);
-//     console.log('sender', sender);
-//     // user = Object.assign(acceptedRequest, { friends: [].push(acceptedR) });
-//   })
-//   .catch(next);

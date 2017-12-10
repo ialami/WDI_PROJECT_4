@@ -1,4 +1,5 @@
 const StartUp = require('../models/startup');
+const User = require('../models/user');
 
 function startUpsIndex(req, res, next) {
   StartUp
@@ -16,7 +17,17 @@ function startUpsCreate(req, res, next) {
 
   StartUp
     .create(req.body)
-    .then(startUp => res.status(201).json(startUp))
+    .then(startUp => {
+      User
+        .findById({ _id: req.body.createdBy })
+        .exec()
+        .then(user => {
+          user.startups.push(startUp);
+          return user.save();
+        })
+        .catch(next);
+      res.status(201).json(startUp);
+    })
     .catch(next);
 }
 
