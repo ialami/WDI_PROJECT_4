@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Button, Modal, FormControl, FormGroup, ControlLabel } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import Axios from 'axios';
 import Auth from '../../lib/Auth';
 import Startup from '../startups/StartupUserShow';
+import BackButton from '../utility/BackButton';
 
 export default class UsersShow extends Component {
   // make a get request to the user with the id defined below
@@ -16,7 +18,8 @@ export default class UsersShow extends Component {
       receiver: this.props.match.params.id,
       senderProfile: ''
     },
-    connectButton: 'Connect'
+    connectButton: 'Connect',
+    commonFriends: ''
   }
 
   closeModal = () => {
@@ -30,6 +33,7 @@ export default class UsersShow extends Component {
   componentDidMount(){
     this.getUser();
     this.getCurrentUser();
+    this.getCommonFriends();
   }
 
   getCurrentUser(){
@@ -74,9 +78,21 @@ export default class UsersShow extends Component {
       .catch(err => console.error(err));
   }
 
+  getCommonFriends(){
+    const currentUserId = Auth.getCurrentUser();
+    const userProfileId = this.props.match.params.id;
+
+    Axios
+      .get(`/api/users/${currentUserId}/commonfriends/${userProfileId}`, {
+        headers: {'Authorization': `Bearer ${Auth.getToken()}`}
+      })
+      .then(res => this.setState({ commonFriends: res.data }))
+      .catch(err => console.error(err));
+  }
+
   render(){
-    console.log(this);
-    console.log('this.state.showModal in render: ', this.state.showModal);
+    console.log('commonFriends', this.state.commonFriends);
+    // console.log('this.state.showModal in render: ', this.state.showModal);
     const { fullName, id, email, startups, username} = this.state.user;
 
     const showModal = this.state.showModal;
@@ -86,12 +102,23 @@ export default class UsersShow extends Component {
         <p>id: {id}</p>
         <p>email: {email}</p>
         <p>username: {username}</p>
+        <BackButton />
 
         <button onClick={this.openModal} bsStyle="primary" bsSize="large">{this.state.connectButton}</button>
         <h2>Start-ups</h2>
         { startups && startups.map(startup => <Startup key={startup._id} {...startup} />)
         }
         <h2>Common friends</h2>
+        { this.state.commonFriends && this.state.commonFriends.map((friend, i) => {
+          return <div key={i}>
+            {friend.fullName}
+            <LinkContainer to={`/users/${friend._id}`}>
+              <Button>
+                Show profile
+              </Button>
+            </LinkContainer>
+          </div>
+        })}
         <div style={ showModal ? styles.showModal : styles.hideModal }>
           <h2>Send a friend request</h2>
           <form

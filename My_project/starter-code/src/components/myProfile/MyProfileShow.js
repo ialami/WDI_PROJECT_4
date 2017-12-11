@@ -16,7 +16,8 @@ export default class MyProfileShow extends Component {
     query: '',
     sortBy: 'date',
     sortDirection: 'desc',
-    boolean: true
+    boolean: true,
+    connections: ''
   }
 
   getUser(){
@@ -92,6 +93,8 @@ export default class MyProfileShow extends Component {
     const orderedStartups = _.orderBy(this.state.startups, [sortBy], [sortDirection]);
     const startups = _.filter(orderedStartups, startup => regex.test([startup.name, startup.industry, startup.country]));
 
+console.log('this', this);
+
     return(
       <Grid fluid>
         <h1 style={styles.myprofile}>My profile</h1>
@@ -131,6 +134,16 @@ export default class MyProfileShow extends Component {
         <Row>
           <Col lg={12} md={12} ls={12}>
             <h1>My connections</h1>
+            { this.state.user.friends && this.state.user.friends.map(friend => {
+              return <div key={friend._id}>
+                <p>{friend.fullName}</p>
+                <LinkContainer to={`/users/${friend._id}`}>
+                  <Button>
+                    See profile
+                  </Button>
+                </LinkContainer>
+              </div>
+            })}
           </Col>
         </Row>
         <Row>
