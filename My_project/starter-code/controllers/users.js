@@ -140,18 +140,18 @@ function deleteFriend(req, res, next){
   deleteFriendPromise(req.params.friend, req.params.id)
     .then(() => res.status(204).end())
     .catch(next);
-  //
-  // removeRequestPromise(req.params.id, req.params.friend)
-  //   .then(() => res.status(204).end())
-  //   .catch(next);
-  //
-  // removeRequestPromise(req.params.friend, req.params.id)
-  //   .then(() => res.status(204).end())
-  //   .catch(next);
+
+  removeRequestPromise(req.params.id, req.params.friend, req.params.requestid)
+    .then(() => res.status(204).end())
+    .catch(next);
+
+  removeRequestPromise(req.params.friend, req.params.id, req.params.requestid)
+    .then(() => res.status(204).end())
+    .catch(next);
 
 }
 
-const removeRequestPromise = (friendA, friendB) => {
+const removeRequestPromise = (friendA, friendB, requestId) => {
   return new Promise((resolve, reject) => {
     Request
       .find({$or: [
@@ -161,8 +161,12 @@ const removeRequestPromise = (friendA, friendB) => {
       .exec()
       .then(requests => {
         removeRequest(requests, friendB);
-        requests.save();
-        return resolve(requests);
+
+        return Request.findById(requestId);
+      })
+      .then(request => {
+        request.remove();
+        resolve('Friend has been successfully deleted.');
       })
       .catch(reject);
   });

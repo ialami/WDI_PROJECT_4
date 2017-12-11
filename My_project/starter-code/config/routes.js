@@ -33,7 +33,7 @@ router.route('/users/:id/startups')
   .get(users.showStartups);
 router.route('/users/:id/commonfriends/:with')
   .get(secureRoute, users.commonFriends);
-router.route('/users/:id/deletefriend/:friend')
+router.route('/users/:id/deletefriend/:friend/:requestid')
   .get(secureRoute, users.deleteFriend);
 
 router.route('/requests')
