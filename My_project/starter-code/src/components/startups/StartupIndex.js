@@ -6,7 +6,7 @@ import { Thumbnail, Image } from 'react-bootstrap';
 const Startup = ({ image, industry, country, date, id }) => {
 
   const link = (!!Auth.getCurrentUser()) ? `/startups/${id}` : "/login" ;
-
+  console.log(link);
   return(
     <div>
       <Thumbnail

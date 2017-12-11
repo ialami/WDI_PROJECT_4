@@ -23,8 +23,8 @@ router.route('/login')
 router.route('/users')
   .get(users.index);
 router.route('/users/:id')
-  .get(users.show) //this should be secured too no?
   .all(secureRoute)
+  .get(users.show)
   .put(users.update)
   .delete(users.delete);
 router.route('/users/:id/passwords')

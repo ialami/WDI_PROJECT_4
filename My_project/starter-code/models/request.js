@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
 const requestSchema = new mongoose.Schema({
-  // text: {
-  //   type: String,
-  //   required: true
-  // },
+  text: {
+    type: String
+    // required: true
+  },
   receiver: {
     type: mongoose.Schema.ObjectId,
     ref: 'User'
@@ -17,6 +17,10 @@ const requestSchema = new mongoose.Schema({
     type: String,
     required: true,
     default: 'pending'
+  },
+  senderProfile: {
+    type: Object,
+    required: true
   }
 });
 

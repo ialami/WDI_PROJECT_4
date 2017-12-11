@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import Auth from '../../lib/Auth';
-import { Navbar, NavItem, Nav, NavDropdown, MenuItem } from 'react-bootstrap';
+import { Button, Navbar, NavItem, Nav, NavDropdown, MenuItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import Axios from 'axios';
 
@@ -12,7 +12,7 @@ class Navigationbar extends Component {
     pendingRequests: []
   }
 
-  logout(e) {
+  logout = (e) => {
     e.preventDefault();
     console.log(this);
     Auth.removeToken();
@@ -30,19 +30,11 @@ class Navigationbar extends Component {
         headers: { Authorization: `Bearer ${Auth.getToken()}`}
       })
       .then(requests => {
-        // console.log(requests.data);
-        requests.data.map(request => {
-          // console.log('each request', request);
-          // console.log('request status', request.status);
-          // console.log('request receiver', request.receiver);
-          // console.log('current user', Auth.getCurrentUser());
-          if (request.status === 'pending' && request.receiver === Auth.getCurrentUser()){
-            // console.log('it is a match!!!');
-            // console.log(request)
-            this.setState({ pendingRequests: this.state.pendingRequests.concat([request])});
-          }
+        console.log('requests.data', requests.data);
+        const pendingRequests = requests.data.filter(request => {
+          return request.status === 'pending' && request.receiver === Auth.getCurrentUser();
         });
-        console.log('new pending requests', this.state.pendingRequests);
+        this.setState({ pendingRequests });
       })
       .catch(err => console.error(err));
   }
@@ -51,18 +43,20 @@ class Navigationbar extends Component {
     this.getRequests();
   }
 
+  acceptFriend = e => {
+    e.preventDefault();
+    Axios
+      .put(`/api/requests/${e.target.value}/accept`, null, {
+        headers: {'Authorization': `Bearer ${Auth.getToken()}`}
+      })
+      .then(() => console.log('You are now friends !'))
+      .catch(err => console.error(err));
+  }
+
 
 
   render(){
-// console.log('this in render', this);
-// console.log(this.state.pendingRequests[0]);
-  const requests = this.state.pendingRequests
-  console.log('requesys', requests);
-
-  const filteredRequests = requests.map(request => Object.assign({}, {sender: request.sender, id: request.id})
-    );
-  console.log('filteredRequests', filteredRequests);
-
+    console.log('pending requests', this.state.pendingRequests);
     return(
       <Navbar inverse collapseOnSelect style={styles.navbar}>
         <Navbar.Header>
@@ -80,14 +74,18 @@ class Navigationbar extends Component {
             </LinkContainer>
             <NavDropdown eventKey={3} title="Notifications" id="basic-nav-dropdown">
               <MenuItem eventKey={3.1}>Action</MenuItem>
-              <MenuItem eventKey={3.2}>You have received friend req from { this.state.pendingRequests[0] && this.state.pendingRequests[0].sender}</MenuItem>
 
-              { filteredRequests && filteredRequests.map((request, i) => {
-                <MenuItem>
-                  New request from
-                  {/* {request.sender} */}
-                </MenuItem>;
-              })}
+              { this.state.pendingRequests && this.state.pendingRequests.map(request => <MenuItem key={request.id}>
+                <LinkContainer to={`/users/${request.sender}`}>
+                  <a href="">New request from {request.senderProfile.fullName}</a>
+                </LinkContainer>
+                <Button
+                  value={request.id} onClick={this.acceptFriend}
+                >
+                  Accept
+                </Button>
+              </MenuItem>
+              )}
             </NavDropdown>
           </Nav>
           <Nav pullRight>
