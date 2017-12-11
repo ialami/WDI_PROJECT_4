@@ -5,10 +5,13 @@ import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Grid, Row, Col, Button, Image } from 'react-bootstrap';
 
-const Startup = ({ name, image, industry, country, date, founders, fundingtype, description, partnering, website, incubator, createdBy, id, deleteStartup }) => {
+const Startup = ({ name, image, industry, country, date, founders, fundingtype, description, partnering, website, incubator, createdBy, id, deleteStartup, user }) => {
   return(
     <Grid fluid>
-      <p>Created by: {createdBy}</p>
+      <LinkContainer to={`/users/${createdBy}`}>
+        { user.fullName && <a href="#">Cretaed by: {user.fullName}</a> }
+      </LinkContainer>
+      <p>Created by id: {createdBy}</p>
       <BackButton />
       <Row>
         <Col lg={8} md={8} ls={12}>

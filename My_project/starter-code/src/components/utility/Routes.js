@@ -7,9 +7,10 @@ import StartupsIndex from '../startups/StartupsIndex';
 import StartupsNew from '../startups/StartupsNew';
 import StartupsShow from '../startups/StartupsShow';
 import StartupsEdit from '../startups/StartupsEdit';
-import UserShow from '../user/UserShow';
-import UserEdit from '../user/UserEdit';
-import UserEditPassword from '../user/UserEditPassword';
+import MyProfileShow from '../myProfile/MyProfileShow';
+import MyProfileEdit from '../myProfile/MyProfileEdit';
+import MyProfileEditPassword from '../myProfile/MyProfileEditPassword';
+import UsersShow from '../users/UsersShow';
 import ProtectedRoute from './ProtectedRoute';
 
 const Routes = () => {
@@ -20,11 +21,12 @@ const Routes = () => {
       <Route exact path="/" component={Home}/>
       <ProtectedRoute path="/startups/new" component={StartupsNew}/>
       <ProtectedRoute path="/startups/:id/edit" component={StartupsEdit}/>
-      <Route path="/startups/:id" component={StartupsShow}/>
+      <ProtectedRoute path="/startups/:id" component={StartupsShow}/>
       <Route path="/startups" component={StartupsIndex}/>
-      <Route path="/users/:id/edit/password" component={UserEditPassword}/>
-      <Route path="/users/:id/edit" component={UserEdit}/>
-      <ProtectedRoute path="/users/:id" component={UserShow}/>
+      <ProtectedRoute path="/myprofile/:id/edit/password" component={MyProfileEditPassword}/>
+      <ProtectedRoute path="/myprofile/:id/edit" component={MyProfileEdit}/>
+      <ProtectedRoute path="/myprofile/:id" component={MyProfileShow}/>
+      <Route path="/users/:id" component={UsersShow}/>
     </Switch>
   );
 };

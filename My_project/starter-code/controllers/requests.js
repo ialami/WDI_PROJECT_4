@@ -15,6 +15,7 @@ function addFriend(req, res, next){
       Request
         .create(req.body)
         .then(friendRequest => {
+          // friendRequest = Object.assign(friendRequest, { status: 'pending' });
           res.status(201).json(friendRequest);
         })
         .catch(next);

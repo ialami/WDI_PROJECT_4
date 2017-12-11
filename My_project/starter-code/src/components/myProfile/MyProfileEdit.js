@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 // import Axios from 'axios';
 // import Auth from '../../lib/Auth';
 
-export default class UserEdit extends Component {
+export default class MyProfileEdit extends Component {
 
   state = {
     user: {

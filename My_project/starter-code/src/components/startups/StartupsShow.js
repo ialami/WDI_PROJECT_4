@@ -20,8 +20,10 @@ export default class StartupShow extends Component {
       partnering: '',
       website: '',
       fundingtype: '',
-      id: ''
-    }
+      id: '',
+      createdBy: ''
+    },
+    byUser: ''
   }
 
   deleteStartup = () => {
@@ -33,20 +35,33 @@ export default class StartupShow extends Component {
       .catch(err => console.log(err));
   }
 
-  componentDidMount(){
-    console.log(this);
+  getStartup(){
     Axios
       .get(`/api/startups/${this.props.match.params.id}`, {
         headers: {'Authorization': `Bearer ${Auth.getToken()}`}
       })
       .then(res => this.setState({ startup: res.data }))
+      .then(() => {
+        const createdBy = this.state.startup.createdBy;
+        Axios
+          .get(`/api/users/${createdBy}`, {
+            headers: { Authorization: `Bearer ${Auth.getToken()}`}
+          })
+          .then(res => this.setState({ byUser: res.data }))
+          .catch(err => console.error(err));
+      })
       .catch(err => console.log(err));
   }
 
+  componentDidMount(){
+    this.getStartup();
+  }
+
   render(){
+    console.log(this.state);
     return(
       <div>
-        { this.state.startup && <Startup {...this.state.startup} deleteStartup={this.deleteStartup}/> }
+        { ( this.state.startup && this.state.byUser ) && <Startup {...this.state.startup} deleteStartup={this.deleteStartup} user={this.state.byUser}/> }
       </div>
     );
   }

@@ -4,7 +4,7 @@ import Auth from '../../lib/Auth';
 import { Grid, Row, Col, Image, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
-const Startup = ({ name, image, industry, country, date, id, createdBy, deleteStartup }) => {
+const Startup = ({ name, image, industry, country, date, id, createdBy, deleteStartup, _id }) => {
   return(
     <Grid fluid>
       <Row style={styles.container}>
@@ -23,7 +23,7 @@ const Startup = ({ name, image, industry, country, date, id, createdBy, deleteSt
         >
           <div style={styles.buttoncontainer}>
             <div style={styles.seemore}>
-              <LinkContainer to={`/startups/${id}`}>
+              <LinkContainer to={`/startups/${_id}`}>
                 <Button
                   bsStyle="primary"
                 >

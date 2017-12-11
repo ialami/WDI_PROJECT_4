@@ -2,7 +2,7 @@ import React from 'react';
 import BackButton from '../utility/BackButton';
 import { FormGroup, FormControl } from 'react-bootstrap';
 
-const UserEditPasswordForm = ({ handleChange, handleSubmit, passwords }) => {
+const MyProfileEditPasswordForm = ({ handleChange, handleSubmit, passwords }) => {
   return(
     <div>
       <h1 style={styles.title}>Reset password</h1>
@@ -52,7 +52,7 @@ const UserEditPasswordForm = ({ handleChange, handleSubmit, passwords }) => {
   );
 };
 
-export default UserEditPasswordForm;
+export default MyProfileEditPasswordForm;
 
 const styles = {
   title: {

@@ -6,9 +6,9 @@ import _ from 'lodash';
 import SearchBar from '../utility/SearchBar';
 import { Grid, Row, Col, Image, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import UserForm from './UserForm';
+import MyProfileForm from './MyProfileForm';
 
-export default class UserShow extends Component {
+export default class MyProfileShow extends Component {
 
   state = {
     user: '',
@@ -111,14 +111,14 @@ export default class UserShow extends Component {
               <Button style={styles.button} onClick={this.switchBoolean}>
                 Update details
               </Button>
-              <LinkContainer style={styles.buttons} to={`/users/${this.props.match.params.id}/edit/password`}>
+              <LinkContainer style={styles.buttons} to={`/myprofile/${this.props.match.params.id}/edit/password`}>
                 <Button>
                   Update password
                 </Button>
               </LinkContainer>
             </div>
             }
-            { !boolean && <UserForm
+            { !boolean && <MyProfileForm
               handleChange={this.handleChange}
               handleSubmit={this.handleSubmit}
               user={this.state.user}

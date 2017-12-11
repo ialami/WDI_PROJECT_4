@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 import Auth from '../../lib/Auth';
-import UserEditPasswordForm from './UserEditPasswordForm.js';
+import MyProfileEditPasswordForm from './MyProfileEditPasswordForm.js';
 
-export default class UserEditPassword extends Component {
+export default class MyProfileEditPassword extends Component {
 
   state = {
     passwords: {
@@ -25,7 +25,7 @@ export default class UserEditPassword extends Component {
         headers: {'Authorization': `Bearer ${Auth.getToken()}`}
       })
       .then(() =>
-        this.props.history.push(`/users/${this.props.match.params.id}`))
+        this.props.history.push(`/myprofile/${this.props.match.params.id}`))
       // .then(res => console.log(res))
       .catch(err => console.error(err));
   }
@@ -33,7 +33,7 @@ export default class UserEditPassword extends Component {
   render(){
     return(
       <div>
-        <UserEditPasswordForm
+        <MyProfileEditPasswordForm
           passwords ={this.state.passwords}
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}

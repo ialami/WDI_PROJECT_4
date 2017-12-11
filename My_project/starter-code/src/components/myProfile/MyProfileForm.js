@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap'
 
-const UserForm = ({ handleChange, handleSubmit, user, switchBoolean }) => {
+const MyProfileForm = ({ handleChange, handleSubmit, user, switchBoolean }) => {
 console.log('switchBoolean in user form', switchBoolean);
 console.log('handleSubmit', handleSubmit);
   // const form = document.getElementsByTagName('form');
@@ -53,7 +53,7 @@ console.log('handleSubmit', handleSubmit);
   );
 };
 
-export default UserForm;
+export default MyProfileForm;
 
 // {/* <form>
 //   <FormGroup
