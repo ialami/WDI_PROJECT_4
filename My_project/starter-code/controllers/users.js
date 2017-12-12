@@ -95,118 +95,6 @@ function commonFriends(req, res, next){
     .catch(next);
 }
 
-function deleteFriend(req, res, next){
-
-  deleteFriendPromise(req.params.id, req.params.friend)
-    .then(() => {
-      res.json('Friend successfully deleted');
-      res.status(204).end();
-    })
-    .catch(next);
-
-  deleteFriendPromise(req.params.friend, req.params.id)
-    .then(() => res.status(204).end())
-    .catch(next);
-
-  removeRequestPromise(req.params.id, req.params.friend, req.params.requestid)
-    .then(() => res.status(204).end())
-    .catch(next);
-
-  removeRequestPromise(req.params.friend, req.params.id, req.params.requestid)
-    .then(() => res.status(204).end())
-    .catch(next);
-
-}
-
-const removeRequestPromise = (friendA, friendB, requestId) => {
-  return new Promise((resolve, reject) => {
-    Request
-      .find({$or: [
-        { sender: friendA },
-        { receiver: friendA }
-      ]})
-      .exec()
-      .then(requests => {
-        removeRequest(requests, friendB);
-
-        return Request.findById(requestId);
-      })
-      .then(request => {
-        request.remove();
-        resolve('Friend has been successfully deleted.');
-      })
-      .catch(reject);
-  });
-};
-
-function removeRequest(arrayOfRequests, idToDelete){
-
-  for(let i=0; i < arrayOfRequests.length; i++){
-    let sender;
-    let receiver;
-
-    for(var key in arrayOfRequests[i]){
-      if(key==='sender'){
-        sender = arrayOfRequests[i][key];
-      }
-    }
-
-    for(var prop in arrayOfRequests[i]){
-      if(prop==='receiver'){
-        receiver = arrayOfRequests[i][prop];
-      }
-    }
-
-    if (sender==idToDelete || receiver==idToDelete){
-      arrayOfRequests.splice(i, 1);
-    }
-
-    console.log('arrayOfRequests after splice', arrayOfRequests);
-  }
-
-  return arrayOfRequests;
-}
-
-function removeFriend(arrayOfFriends, idOfFriendToRemove){
-  for(let i=0; i < arrayOfFriends.length; i++){
-
-    //Looping through the object of friend
-    for(var key in arrayOfFriends[i]){
-
-      //get the id of each friend
-      if(key==='_id'){
-        let id = arrayOfFriends[i][key];
-        console.log(i);
-        console.log(id);
-        //get the friend with the specific id and remove him from the array of friends - remember to save the array or the user
-        if(id==idOfFriendToRemove){
-          console.log('the ids match', id, idOfFriendToRemove);
-          arrayOfFriends.splice(i, 1);
-          console.log(arrayOfFriends);
-        }
-      }
-    }
-  }
-}
-
-const deleteFriendPromise = (friendA, friendB) => {
-  return new Promise((resolve, reject) => {
-    User
-      .findById(friendA)
-      .exec()
-      .then(user => {
-        const arrayOfFriends = user.friends;
-        const idOfFriendToRemove = friendB;
-        // console.log('friends before deleting', arrayOfFriends);
-        // console.log('idOfFriendToRemove', idOfFriendToRemove);
-        removeFriend(arrayOfFriends, idOfFriendToRemove);
-        user.save();
-        return resolve(user);
-      })
-      .catch(reject);
-  });
-};
-
 module.exports = {
   index: usersIndex,
   show: usersShow,
@@ -214,6 +102,5 @@ module.exports = {
   delete: usersDelete,
   showStartups: showStartups,
   verifyPassword: VerifyPassword,
-  commonFriends: commonFriends,
-  deleteFriend: deleteFriend
+  commonFriends: commonFriends
 };

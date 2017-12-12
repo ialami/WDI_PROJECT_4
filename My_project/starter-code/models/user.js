@@ -2,9 +2,6 @@ const mongoose = require('mongoose-fill');
 const bcrypt = require('bcrypt');
 const validator = require('validator');
 
-// const Request = require('./request');
-const _ = require('lodash');
-
 const userSchema = new mongoose.Schema({
   fullName: {
     type: String,
@@ -131,5 +128,6 @@ function getPendingRequests(next){
       receiver: this._id,
       status: 'pending'
     })
+    .populate('sender receiver')
     .exec(next);
 }

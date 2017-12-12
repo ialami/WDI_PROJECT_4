@@ -33,8 +33,6 @@ router.route('/users/:id/startups')
   .get(users.showStartups);
 router.route('/users/commonfriends/:with')
   .get(secureRoute, users.commonFriends);
-router.route('/users/:id/deletefriend/:friend/:requestid')
-  .get(secureRoute, users.deleteFriend);
 
 router.route('/requests')
   .get(secureRoute, requests.getRequests);
@@ -42,7 +40,10 @@ router.route('/requests/:userId/add')
   .post(secureRoute, requests.addFriend);
 router.route('/requests/:id/accept')
   .put(secureRoute, requests.acceptRequest);
-
+router.route('/requests/:id/refuse')
+  .put(secureRoute, requests.refuseRequest);
+router.route('/requests/deletefriend/:id')
+  .delete(secureRoute, requests.deleteFriend);
 
 router.route('/*')
   .all((req, res) => res.notFound());
