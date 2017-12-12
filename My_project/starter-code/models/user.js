@@ -57,6 +57,7 @@ function getFriends(next) {
     // .exec()
     // .then(() => console.log('then fired'))
     // .then(res => console.log(res))
+    // .then(res => console.log(res))
     .exec(next);
 }
 
