@@ -2,7 +2,7 @@ const mongoose = require('mongoose-fill');
 const bcrypt = require('bcrypt');
 const validator = require('validator');
 
-const Request = require('./request');
+// const Request = require('./request');
 const _ = require('lodash');
 
 const userSchema = new mongoose.Schema({
@@ -44,22 +44,6 @@ userSchema
 userSchema
   .fill('friends')
   .get(getFriends);
-
-//where can I write logic ?
-function getFriends(next) {
-  Request
-    .find({
-      $or: [{ sender: this._id }, { receiver: this._id }],
-      status: 'accepted'
-    })
-    .populate('sender receiver')
-    .select('sender receiver')
-    // .exec()
-    // .then(() => console.log('then fired'))
-    // .then(res => console.log(res))
-    // .then(res => console.log(res))
-    .exec(next);
-}
 
 userSchema
   .fill('pendingReceivedRequests')
@@ -127,4 +111,24 @@ function validateEmail(email) {
 
 function validateUsername(username){
   if (username.indexOf(' ') > 0) return this.invalidate('username', 'Username must not contain white spaces.');
+}
+
+function getFriends(next) {
+  this.db.model('Request')
+    .find({
+      $or: [{ sender: this._id }, { receiver: this._id }],
+      status: 'accepted'
+    })
+    .exec()
+    .then(requests => {
+      const friendIds = requests.map(request => {
+        return request.sender.equals(this._id) ? request.receiver : request.sender;
+      });
+
+      return this.db.model('User')
+        .find({ _id: { $in: friendIds }})
+        .exec();
+    })
+    .then(users => next(null, users))
+    .catch(next);
 }
