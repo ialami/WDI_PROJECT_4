@@ -5,7 +5,9 @@ function globalToJSON(schema) {
     virtuals: true,
     transform(obj, json) {
       delete json.__v;
-      // delete json.password;
+      delete json.password;
+      delete json.passwordConfirmation;
+      delete json._id;
     }
   });
 }

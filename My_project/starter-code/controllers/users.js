@@ -2,6 +2,7 @@ const User = require('../models/user');
 const Startup = require('../models/startup');
 const Request = require('../models/request');
 const _ = require('lodash');
+const Promise = require('bluebird');
 
 function usersIndex(req, res) {
   User
@@ -16,7 +17,7 @@ function usersShow(req, res) {
   User
     .findById(req.params.id)
     .populate('startups sentRequests receivedRequests')
-    .fill('friends')
+    .fill('friends pendingReceivedRequests')
     .exec()
     .then(user => {
       if (!user) return res.status(404).json({ message: 'User not found.' });
@@ -79,56 +80,19 @@ function VerifyPassword(req, res, next){
 }
 
 function commonFriends(req, res, next){
+  const promises = {
+    currentUser: User.findById(req.user.id).fill('friends').exec(),
+    friend: User.findById(req.params.with).fill('friends').exec()
+  };
 
-  // User
-  //   .findById(req.params.id)
-  //   .exec()
-  //   .then(user => {
-  //     const userFriends = user.friends;
-  //
-  //     const filtereduserFriends = userFriends.map(friend => {
-  //       delete friend.startups;
-  //       delete friend.friends;
-  //       delete friend.password;
-  //       delete friend.__v;
-  //       return friend;
-  //     });
-  //
-  //     User
-  //       .findById(req.params.with)
-  //       .exec()
-  //       .then(friend => {
-  //         const friendFriends = friend.friends;
-  //
-  //         console.log('userFriends', userFriends);
-  //         console.log('friendFriends', friendFriends);
-  //
-  //         const filteredfriendFriends = friendFriends.map(friend => {
-  //           delete friend.startups;
-  //           delete friend.friends;
-  //           delete friend.password;
-  //           delete friend.__v;
-  //           return friend;
-  //         });
-  //         console.log('filteredfriendFriends without startups', filteredfriendFriends);
-  //         console.log('filtereduserFriends without startups', filtereduserFriends);
-  //
-  //         const commonFriends = [];
-  //
-  //         for (let i = 0; i < filteredfriendFriends.length; i++) {
-  //           for(let j = 0; j < filtereduserFriends.length; j++){
-  //             if(_.isEqual(filteredfriendFriends[i], filtereduserFriends[j])) {
-  //               console.log(filteredfriendFriends[i]);
-  //               commonFriends.push(filteredfriendFriends[i]);
-  //             }
-  //           }
-  //         }
-  //         console.log(commonFriends);
-  //         return res.json(commonFriends);
-  //       })
-  //       .catch(next);
-  //   })
-  //   .catch(next);
+  Promise
+    .props(promises)
+    .then(data => {
+      const myFriendsIds = data.currentUser.friends.map(friend => `${friend._id}`);
+      const commonFriends = data.friend.friends.filter(friend => myFriendsIds.includes(`${friend._id}`));
+      return res.status(200).json(commonFriends);
+    })
+    .catch(next);
 }
 
 function deleteFriend(req, res, next){

@@ -23,7 +23,6 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String, required: 'Please provide a password'
   },
-  // friends: [],
   startups: []
 });
 
@@ -47,15 +46,7 @@ userSchema
 
 userSchema
   .fill('pendingReceivedRequests')
-  .get(function(next){
-    this.db.model('Request')
-      .find({
-        receiver: this._id,
-        status: 'pending'
-      })
-      .populate('sender')
-      .exec(next);
-  });
+  .get(getPendingRequests);
 
 userSchema
   .path('username')
@@ -124,11 +115,21 @@ function getFriends(next) {
       const friendIds = requests.map(request => {
         return request.sender.equals(this._id) ? request.receiver : request.sender;
       });
-
       return this.db.model('User')
         .find({ _id: { $in: friendIds }})
         .exec();
     })
-    .then(users => next(null, users))
+    .then(users => {
+      return next(null, users);
+    })
     .catch(next);
+}
+
+function getPendingRequests(next){
+  return this.db.model('Request')
+    .find({
+      receiver: this._id,
+      status: 'pending'
+    })
+    .exec(next);
 }

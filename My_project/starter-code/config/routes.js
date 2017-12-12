@@ -31,7 +31,7 @@ router.route('/users/:id/passwords')
   .put(users.verifyPassword);
 router.route('/users/:id/startups')
   .get(users.showStartups);
-router.route('/users/:id/commonfriends/:with')
+router.route('/users/commonfriends/:with')
   .get(secureRoute, users.commonFriends);
 router.route('/users/:id/deletefriend/:friend/:requestid')
   .get(secureRoute, users.deleteFriend);
