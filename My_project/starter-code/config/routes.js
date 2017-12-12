@@ -38,7 +38,7 @@ router.route('/users/:id/deletefriend/:friend/:requestid')
 
 router.route('/requests')
   .get(secureRoute, requests.getRequests);
-router.route('/requests/addfriend/:id')
+router.route('/requests/:userId/add')
   .post(secureRoute, requests.addFriend);
 router.route('/requests/:id/accept')
   .put(secureRoute, requests.acceptRequest);

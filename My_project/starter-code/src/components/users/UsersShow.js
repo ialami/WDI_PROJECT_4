@@ -14,7 +14,6 @@ export default class UsersShow extends Component {
     showModal: false,
     request: {
       text: '',
-      sender: Auth.getCurrentUser(),
       receiver: this.props.match.params.id,
       senderProfile: ''
     },
@@ -70,7 +69,7 @@ export default class UsersShow extends Component {
     console.log('current user', Auth.getCurrentUser());
     console.log(this.props.match.params.id);
     Axios
-      .post(`/api/requests/addfriend/${this.props.match.params.id}`, this.state.request, {
+      .post(`/api/requests/${this.props.match.params.id}/add`, this.state.request, {
         headers: {'Authorization': `Bearer ${Auth.getToken()}`}
       })
       .then(res => console.log('this is the response from handleSubmit', res))

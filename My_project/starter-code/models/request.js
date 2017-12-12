@@ -17,11 +17,11 @@ const requestSchema = new mongoose.Schema({
     type: String,
     required: true,
     default: 'pending'
-  },
-  senderProfile: {
-    type: Object,
-    required: true
   }
+  // senderProfile: {
+  //   type: Object
+  //   required: true
+  // }
 });
 
 module.exports = mongoose.model('Request', requestSchema);

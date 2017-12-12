@@ -1,6 +1,9 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose-fill');
 const bcrypt = require('bcrypt');
 const validator = require('validator');
+
+const Request = require('./request');
+const _ = require('lodash');
 
 const userSchema = new mongoose.Schema({
   fullName: {
@@ -20,9 +23,54 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String, required: 'Please provide a password'
   },
-  friends: [],
+  // friends: [],
   startups: []
 });
+
+userSchema
+  .virtual('sentRequests', {
+    ref: 'Request',
+    localField: '_id',
+    foreignField: 'sender'
+  });
+
+userSchema
+  .virtual('receivedRequests', {
+    ref: 'Request',
+    localField: '_id',
+    foreignField: 'receiver'
+  });
+
+userSchema
+  .fill('friends')
+  .get(getFriends);
+
+//where can I write logic ?
+function getFriends(next) {
+  Request
+    .find({
+      $or: [{ sender: this._id }, { receiver: this._id }],
+      status: 'accepted'
+    })
+    .populate('sender receiver')
+    .select('sender receiver')
+    // .exec()
+    // .then(() => console.log('then fired'))
+    // .then(res => console.log(res))
+    .exec(next);
+}
+
+userSchema
+  .fill('pendingReceivedRequests')
+  .get(function(next){
+    this.db.model('Request')
+      .find({
+        receiver: this._id,
+        status: 'pending'
+      })
+      .populate('sender')
+      .exec(next);
+  });
 
 userSchema
   .path('username')
