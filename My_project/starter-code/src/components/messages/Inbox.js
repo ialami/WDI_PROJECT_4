@@ -69,11 +69,13 @@ class Inbox extends Component {
   render(){
     console.log('this.state.chatbox', this.state.chatbox);
     console.log('this.state.chats', this.state.chats);
+
     return(
-      <Grid fluid>
+      <Grid fluid style={styles.grid}>
         <Row>
           <Col
             lg={3} md={3} sm={3}
+            style={styles.messagesIndex}
           >
             <MessagesIndex
               chats={this.state.chats}
@@ -82,20 +84,23 @@ class Inbox extends Component {
           </Col>
           <Col
             lg={9} md={9} sm={9}
+            style={styles.chatbox}
           >
-            <Grid fluid>
-              <h1>Chatbox</h1>
+            <h1 style={styles.title}>Chatbox</h1>
+            <hr style={styles.lineBreak}></hr>
+            <div style={styles.history}>
               { this.state.chatbox.messages && this.state.chatbox.messages.map(message => <Chat
                 key={message.id}
                 {...message}
               />)
               }
-              <InputMessage
-                handleSubmit={this.handleSubmit}
-                handleChange={this.handleChange}
-                message={this.state.message}
-              />
-            </Grid>
+            </div>
+            <InputMessage
+              handleSubmit={this.handleSubmit}
+              handleChange={this.handleChange}
+              message={this.state.message}
+              style={styles.input}
+            />
           </Col>
         </Row>
       </Grid>
@@ -104,3 +109,38 @@ class Inbox extends Component {
 }
 
 export default Inbox;
+
+const styles = {
+  grid: {
+    // border: '3px solid blue',
+    height: '100vh'
+  },
+  messagesIndex: {
+    // border: '2px solid black',
+    height: '100vh'
+  },
+  lineBreak: {
+    color: 'black',
+    height: '2px',
+    backgroundColor: 'black'
+  },
+  title: {
+    textAlign: 'center',
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: '15px'
+  },
+  chatbox: {
+    backgroundColor: 'white',
+    maxHeight: '100vh'
+    // overflow: 'auto'
+  },
+  history: {
+    overflow: 'auto',
+    maxHeight: '90vh'
+  },
+  input: {
+    position: 'fixed',
+    marginBottom: '0'
+  }
+};

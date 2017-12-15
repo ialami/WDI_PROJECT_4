@@ -346,6 +346,7 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center'
+    // height: '100vh'
   },
   myStartupsTitle: {
     padding: '20px 0 20px 0',

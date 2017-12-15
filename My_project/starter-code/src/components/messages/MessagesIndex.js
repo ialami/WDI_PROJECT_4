@@ -7,8 +7,8 @@ import Message from './message';
 const MessagesIndex = ({chats, selectChat}) => {
 
   return(
-    <Grid fluid>
-      <h1>Chats</h1>
+    <Grid fluid style={styles.grid}>
+      <h1 style={styles.title}>Chats</h1>
       <Row>
         <Col
           lg={12} md={12} sm={12}
@@ -29,3 +29,14 @@ const MessagesIndex = ({chats, selectChat}) => {
 };
 
 export default MessagesIndex;
+
+const styles = {
+  grid: {
+    // border: '2px solid red',
+    height: '100vh'
+  },
+  title: {
+    margin: '10px auto',
+    textAlign: 'center'
+  }
+};

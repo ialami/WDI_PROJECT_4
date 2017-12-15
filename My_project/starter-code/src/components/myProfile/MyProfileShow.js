@@ -86,7 +86,7 @@ console.log('MY PROFILE this.state.user', this.state.user);
     return(
       <Grid fluid style={styles.grid}>
         <h1 style={styles.myprofile}>My profile</h1>
-        <Row>
+        <Row style={styles.screen}>
           {/* <Col
             lg={4} md={4} sm={4}
             style={styles.imagecontainer}
@@ -184,6 +184,9 @@ const styles = {
     fontWeight: 'bold',
     fontSize: '50px'
   },
+  screen: {
+    // height: '100vh'
+  },
   myDetails: {
     margin: 'auto',
     // display: 'flex',
@@ -205,6 +208,7 @@ const styles = {
     // border: '2px solid red',
     color: 'rgba(31, 180, 255, 1)',
     backgroundColor: 'white'
+    // height: '100vh'
   },
   myConnections: {
     margin: 'auto',
@@ -239,6 +243,7 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center'
+    // height: '100vh'
   },
   myStartupsTitle: {
     padding: '20px 0 20px 0',
