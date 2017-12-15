@@ -19,6 +19,7 @@ const startUpData = [{
   partnering: 'Looking for a partner for operations in South America',
   website: 'https://www.vconnect.com/',
   fundingtype: 'Series C'
+  // createdBy:
 },{
   name: 'Flutterwave',
   description: '"We provide the underlying technology platform that allows businesses to make and accept payments anywhere in Africa." - Flutterwave',
@@ -33,6 +34,7 @@ const startUpData = [{
   partnering: 'Looking for a partner for operations in Asia',
   website: 'https://www.flutterwave.com/',
   fundingtype: 'Series A'
+  // createdBy:
 },{
   name: 'LIfeQ',
   description: '"LifeQ wants people from all walks of life to enjoy optimal health. We implement a unique multidisciplinary approach underpinned by in depth knowledge and understanding of human physiology and systems biology to extract and deliver relevant and meaningful person-specific digital biomarkers from various curated data sources." - LifeQ',
@@ -47,6 +49,7 @@ const startUpData = [{
   partnering: 'Looking for a partner for operations in Senegal',
   website: 'https://www.lifeq.com/',
   fundingtype: 'Series B'
+  // createdBy:
 }];
 
 const userData = [

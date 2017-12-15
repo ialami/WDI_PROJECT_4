@@ -1,73 +1,102 @@
 import React from 'react';
-import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap'
+import { FormGroup, FormControl, ControlLabel, Button, Grid, Row, Col } from 'react-bootstrap';
+import BackButton from '../utility/BackButton';
 
 const MyProfileForm = ({ handleChange, handleSubmit, user, switchBoolean }) => {
-console.log('switchBoolean in user form', switchBoolean);
-console.log('handleSubmit', handleSubmit);
-  // const form = document.getElementsByTagName('form');
-  // document.body.appendChild(form);
+
   return(
-    <div>
+    <Grid fluid style={styles.container}>
       <form
         onSubmit={handleSubmit}
       >
-        <FormGroup
-          // controlId="formBasicText"
-          // validationState={handleSubmit}
-          // onSubmit={handleSubmit}
-        >
-          <FormControl
-            type="text"
-            id="fullName"
-            name="fullName"
-            placeholder="Edit full name"
-            value={user.fullName}
-            // value={boolean}
-            onChange={handleChange}
-          />
-          <FormControl
-            type="text"
-            id="username"
-            name="username"
-            placeholder="Edit username"
-            value={user.username}
-            onChange={handleChange}
-          />
-          <FormControl
-            type="text"
-            id="email"
-            name="email"
-            placeholder="Edit email"
-            value={user.email}
-            onChange={handleChange}
-          />
-          <button
-            // onClick={switchBoolean}
-            className="btn btn-primary"
-          >
-            Save
-          </button>
+        {/* <BackButton/> */}
+        <FormGroup style={styles.formGroup}>
+          <div style={styles.formContainer}>
+            <Row style={styles.row}>
+              <FormControl
+                type="text"
+                id="fullName"
+                name="fullName"
+                placeholder="Edit full name"
+                value={user.fullName}
+                onChange={handleChange}
+                style={styles.input}
+              />
+            </Row>
+            <Row style={styles.row}>
+              <FormControl
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Edit username"
+                value={user.username}
+                onChange={handleChange}
+                style={styles.input}
+              />
+            </Row>
+            <Row style={styles.row}>
+              <FormControl
+                type="text"
+                id="email"
+                name="email"
+                placeholder="Edit email"
+                value={user.email}
+                onChange={handleChange}
+                style={styles.input}
+              />
+            </Row>
+            <Row style={styles.row}>
+              <div style={styles.buttoncontainer}>
+                <button
+                // onClick={switchBoolean}
+                  className="btn btn-primary"
+                  style={styles.button}
+                >
+                Save
+                </button>
+              </div>
+            </Row>
+          </div>
         </FormGroup>
       </form>
-    </div>
+    </Grid>
   );
 };
 
 export default MyProfileForm;
 
-// {/* <form>
-//   <FormGroup
-//     controlId="formBasicText"
-//     validationState={this.getValidationState()}
-//   >
-//     <ControlLabel>Working example with validation</ControlLabel>
-//     <FormControl
-//       type="text"
-//       value={this.state.value}
-//       placeholder="Enter text"
-//       onChange={this.handleChange}
-//     />
-//     <FormControl.Feedback />
-//     <HelpBlock>Validation is based on string length.</HelpBlock>
-//   </FormGroup>
-// </form> */}
+const styles = {
+  container: {
+    // border: '5px solid blue',
+    height: '100vh',
+    backgroundColor: 'rgba(31, 180, 255, 1)',
+    color: 'white'
+    // marginTop: '10px'
+  },
+  row: {
+    margin: '40px'
+  },
+  formContainer: {
+    height: '100vh',
+    margin: 'auto',
+    // display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  input: {
+    margin: 'auto',
+    width: '400px',
+    textAlign: 'center',
+    padding: '20px'
+  },
+  buttoncontainer: {
+    textAlign: 'center'
+  },
+  button: {
+    width: '200px',
+    color: 'black',
+    backgroundColor: 'white',
+    fontSize: '20',
+    fontWeight: 'bold'
+  }
+};

@@ -41,8 +41,16 @@ render(){
       handleChange={this.handleChange}
       handleSubmit={this.handleSubmit}
       errors={this.state.errors}
+      style={styles.main}
     />
   );
 }
 
 }
+
+const styles = {
+  main: {
+    backgroundColor: 'rgba(31, 180, 255, 1)',
+    color: 'white'
+  }
+};

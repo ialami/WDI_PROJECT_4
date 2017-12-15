@@ -4,11 +4,11 @@ import Auth from '../../lib/Auth';
 import { Grid, Row, Col, Image, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
-const Startup = ({ name, image, industry, country, date, id, createdBy, deleteStartup, _id }) => {
+const Startup = ({ name, image, industry, country, date, id, createdBy, deleteStartup }) => {
   return(
     <Grid fluid>
       <Row style={styles.container}>
-        <Col lg={8} md={8} ls={8}>
+        <Col lg={8} md={8} sm={8}>
           <div style={styles.imagecontainer}>
             <Image
               // src={image}
@@ -19,31 +19,43 @@ const Startup = ({ name, image, industry, country, date, id, createdBy, deleteSt
           </div>
         </Col>
         <Col
-          lg={4} md={4} ls={4}
+          lg={4} md={4} sm={4}
+          style={styles.buttonsCol}
         >
           <div style={styles.buttoncontainer}>
             <div style={styles.seemore}>
-              <LinkContainer to={`/startups/${_id}`}>
-                <Button
-                  bsStyle="primary"
-                >
-                  See more ...
-                </Button>
+              <LinkContainer to={`/startups/${id}`}>
+                <div style={styles.buttoncontainer}>
+                  <button
+                    className="btn btn-primary"
+                    style={styles.button}>
+                    See more ...
+                  </button>
+                </div>
               </LinkContainer>
             </div>
             <div style={styles.edit}>
               { ( Auth.isAuthenticated() && ( Auth.getCurrentUser() === createdBy ) ) && <LinkContainer to={`/startups/${id}/edit`}>
-                <Button bsStyle="primary">Edit</Button>
+                <div style={styles.buttoncontainer}>
+                  <button
+                    className="btn btn-primary"
+                    style={styles.button}>
+                    Edit
+                  </button>
+                </div>
               </LinkContainer> }
             </div>
             <div style={styles.delete}>
-              { ( Auth.isAuthenticated() && ( Auth.getCurrentUser() === createdBy ) ) && <Button
-                onClick={deleteStartup}
-                value={id}
-                bsStyle="primary"
-              >
+              { ( Auth.isAuthenticated() && ( Auth.getCurrentUser() === createdBy ) ) && <div style={styles.buttoncontainer}>
+                <button
+                  className="btn btn-primary"
+                  style={styles.button}
+                  onClick={deleteStartup}
+                  value={id}
+                >
                 Delete
-              </Button> }
+                </button>
+              </div> }
             </div>
           </div>
         </Col>
@@ -78,18 +90,18 @@ export default Startup;
 const styles = {
   container: {
     // border: '3px solid black',
-    height: '100%',
+    height: '210px',
     width: 'inherit',
     margin: '30px auto',
     textAlign: 'center'
   },
   imagecontainer: {
-    height: '150px',
+    height: '210px',
     width: '100%',
     padding: '0 20px'
   },
   image: {
-    maxHeight: '150px',
+    maxHeight: '210px',
     margin: 'auto',
     display: 'flex',
     alignItems: 'center',
@@ -97,8 +109,27 @@ const styles = {
     // padding: '0 20px'
   },
   buttoncontainer: {
-    height: '150px',
-    // border: '3px solid blue'
+    height: '33%',
+    // border: '3px solid blue',
+    textAlign: 'center',
+    margin: '2px 0',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  button: {
+    width: '200px',
+    color: 'black',
+    backgroundColor: 'white',
+    fontSize: '15',
+    fontWeight: 'bold',
+    margin: '10px 0',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '45px'
+  },
+  buttonsCol: {
+    // border: '2px solid red'
+    // height: '210px'
   },
   seemore: {
     // border: '2px solid yellow',

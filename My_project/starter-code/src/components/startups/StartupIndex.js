@@ -28,7 +28,7 @@ export default Startup;
 
 const styles = {
   logo: {
-    border: '3px solid black',
+    // border: '3px solid black',
     padding: '0',
     margin: '10',
     width: '100%',

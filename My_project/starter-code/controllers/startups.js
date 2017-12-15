@@ -22,7 +22,8 @@ function startUpsCreate(req, res, next) {
         .findById({ _id: req.body.createdBy })
         .exec()
         .then(user => {
-          user.startups.push(startUp);
+          // user.startups.push(startUp);
+          
           return user.save();
         })
         .catch(next);
@@ -68,7 +69,7 @@ function startUpsDelete(req, res, next) {
       if(!startUp) return res.notFound();
       if (!startUp.belongsTo(req.user)) return res.unauthorized();
 
-      return startUp.remove();
+      startUp.remove();
     })
     .then(() => res.status(204).end())
     .catch(next);

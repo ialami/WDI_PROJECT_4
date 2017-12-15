@@ -8,9 +8,10 @@ import StartupsNew from '../startups/StartupsNew';
 import StartupsShow from '../startups/StartupsShow';
 import StartupsEdit from '../startups/StartupsEdit';
 import MyProfileShow from '../myProfile/MyProfileShow';
-import MyProfileEdit from '../myProfile/MyProfileEdit';
+// import MyProfileEdit from '../myProfile/MyProfileEdit';
 import MyProfileEditPassword from '../myProfile/MyProfileEditPassword';
 import UsersShow from '../users/UsersShow';
+import Inbox from '../messages/Inbox';
 import ProtectedRoute from './ProtectedRoute';
 
 const Routes = () => {
@@ -24,9 +25,10 @@ const Routes = () => {
       <ProtectedRoute path="/startups/:id" component={StartupsShow}/>
       <Route path="/startups" component={StartupsIndex}/>
       <ProtectedRoute path="/myprofile/:id/edit/password" component={MyProfileEditPassword}/>
-      <ProtectedRoute path="/myprofile/:id/edit" component={MyProfileEdit}/>
+      {/* <ProtectedRoute path="/myprofile/:id/edit" component={MyProfileEdit}/> */}
       <ProtectedRoute path="/myprofile/:id" component={MyProfileShow}/>
       <Route path="/users/:id" component={UsersShow}/>
+      <Route path="/inbox" component={Inbox}/>
     </Switch>
   );
 };

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose-fill');
 const bcrypt = require('bcrypt');
 const validator = require('validator');
+// const Chat = require('./chat');
 
 const userSchema = new mongoose.Schema({
   fullName: {
@@ -19,9 +20,40 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String, required: 'Please provide a password'
-  },
-  startups: []
+  }
+  // messages: [Chat]
 });
+
+userSchema
+  .virtual('startups', {
+    ref: 'Startup',
+    localField: '_id',
+    foreignField: 'createdBy'
+  });
+//
+// userSchema
+//   .fill('myMessages')
+//   .get(getMyMessages);
+//
+// function getMyMessages(next){
+//   this.db.model('Chat')
+//     .find({ _id: { $in: 'users' } }) //how can I get the users from the chat model?
+//     .populate('users')
+//     .exec(next);
+// }
+//
+// function getMyMessages(next){
+//   this.db.model('Chat')
+//     .find({
+//       $or:
+//       [
+//         { users[0]: this._id }, //syntax error
+//         { users[1]: this._id }
+//       ]
+//     })
+//     .populate('users')
+//     .exec(next);
+// }
 
 userSchema
   .virtual('sentRequests', {
@@ -43,7 +75,11 @@ userSchema
 
 userSchema
   .fill('pendingReceivedRequests')
-  .get(getPendingRequests);
+  .get(getPendingReceivedRequests);
+
+userSchema
+  .fill('pendingSentRequests')
+  .get(getPendingSentRequests);
 
 userSchema
   .path('username')
@@ -122,10 +158,20 @@ function getFriends(next) {
     .catch(next);
 }
 
-function getPendingRequests(next){
+function getPendingReceivedRequests(next){
   return this.db.model('Request')
     .find({
       receiver: this._id,
+      status: 'pending'
+    })
+    .populate('sender')
+    .exec(next);
+}
+
+function getPendingSentRequests(next){
+  return this.db.model('Request')
+    .find({
+      sender: this._id,
       status: 'pending'
     })
     .populate('sender receiver')

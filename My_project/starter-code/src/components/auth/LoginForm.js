@@ -1,44 +1,53 @@
 import React from 'react';
-import { FormGroup, FormControl } from 'react-bootstrap';
+import { FormGroup, FormControl, Grid, Row, Col, Image, Button } from 'react-bootstrap';
 
 const LoginForm = ({ handleChange, handleSubmit, user, errors }) => {
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      style={styles.container}
-    >
-      <h1 style={styles.title}>Login</h1>
-      <FormGroup>
-        <FormControl
-          type="text"
-          name="email"
-          placeholder="Email"
-          onChange={handleChange}
-          value={user.email}
-          style={styles.input}
-        />
-        <FormControl
-          type="password"
-          name="password"
-          placeholder="Password"
-          onChange={handleChange}
-          value={user.password}
-          style={styles.input}
-        />
-        <div style={styles.error}>
-          <small>{errors}</small>
-        </div>
-        <div style={styles.buttoncontainer}>
-          <button
-            className="btn btn-primary"
-            style={styles.button}
-          >
-            Login
-          </button>
-        </div>
-      </FormGroup>
-    </form>
+    <Grid fluid style={styles.container}>
+      <form
+        onSubmit={handleSubmit}
+      >
+        {/* <h1 style={styles.title}>Login</h1> */}
+        <FormGroup style={styles.formGroup}>
+          <div style={styles.formContainer}>
+            <Row style={styles.row}>
+              <FormControl
+                type="text"
+                name="email"
+                placeholder="Email"
+                onChange={handleChange}
+                value={user.email}
+                style={styles.input}
+              />
+            </Row>
+            <Row style={styles.row}>
+              <FormControl
+                type="password"
+                name="password"
+                placeholder="Password"
+                onChange={handleChange}
+                value={user.password}
+                style={styles.input}
+              />
+              <div style={styles.error}>
+                <small>{errors}</small>
+              </div>
+            </Row>
+            <Row style={styles.row}>
+              <div style={styles.buttoncontainer}>
+                <button
+                  className="btn btn-primary"
+                  style={styles.button}
+                >
+                  Login
+                </button>
+              </div>
+            </Row>
+          </div>
+        </FormGroup>
+      </form>
+    </Grid>
   );
 };
 
@@ -46,24 +55,37 @@ export default LoginForm;
 
 const styles = {
   container: {
-    border: '5px solid blue',
-    height: '100vh'
+    // border: '5px solid blue',
+    height: '100vh',
+    backgroundColor: 'rgba(31, 180, 255, 1)',
+    color: 'white'
+    // marginTop: '10px'
   },
-  title: {
-    // border: '2px solid black',
-    textAlign: 'center',
-    margin: '10px 0'
+  row: {
+    margin: '40px'
+  },
+  formContainer: {
+    height: '100vh',
+    margin: 'auto',
+    // display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   input: {
-    margin: '15px auto',
+    margin: 'auto',
     width: '400px',
-    textAlign: 'center'
+    textAlign: 'center',
+    padding: '20px'
   },
   buttoncontainer: {
     textAlign: 'center'
   },
   button: {
-    width: '400px'
+    width: '200px',
+    color: 'black',
+    backgroundColor: 'white',
+    fontSize: '20',
+    fontWeight: 'bold'
   },
   error: {
     textAlign: 'center',

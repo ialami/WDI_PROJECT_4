@@ -52,6 +52,13 @@ const startupSchema = new mongoose.Schema({
   }
 });
 
+// remove for everyone good for favourite
+// startupSchema.post('remove', (doc) => {
+//   this.model('User').update({startups: { $in: [doc._id] }}, {
+//     $pull: { startups: doc._id }
+//   }, { multi: true });
+// });
+
 startupSchema.methods.belongsTo = function startupBelongsTo(user) {
   if(typeof this.createdBy.id === 'string') return this.createdBy.id === user.id;
   return user.id === this.createdBy.toString();

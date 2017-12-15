@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Axios from 'axios';
 import StartupsForm from './StartupsForm';
 import Auth from '../../lib/Auth';
+import { FormGroup, FormControl, Grid, Row, Col, Image, Button } from 'react-bootstrap';
 
 export default class StartupsNew extends Component {
 
@@ -41,7 +42,7 @@ export default class StartupsNew extends Component {
 
   render(){
     return(
-      <div>
+      <Grid fluid style={styles.container}>
         <h1 style={styles.title}>Add a start-up</h1>
         <StartupsForm
           handleChange={this.handleChange}
@@ -49,7 +50,7 @@ export default class StartupsNew extends Component {
           startup={this.state.startup}
           errors={this.state.errors}
         />
-      </div>
+      </Grid>
     );
   }
 
@@ -59,6 +60,12 @@ const styles = {
   title: {
     // border: '2px solid black',
     textAlign: 'center',
-    margin: '10px 0'
-  }  
+    margin: '10px 0',
+    fontSize: '50px'
+  },
+  container: {
+    height: '100%',
+    backgroundColor: 'rgba(31, 180, 255, 1)'
+    // border: '2px solid red'
+  }
 };

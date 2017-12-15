@@ -16,13 +16,13 @@ const Home = () => {
           <Mainscreen />
         </Col>
       </Row>
-      <Row>
+      {/* <Row>
         <Col
           lg={12} md={12} xs={12}
           style={styles.partners}>
           <OurPartners />
         </Col>
-      </Row>
+      </Row> */}
     </Grid>
   );
 };
@@ -31,14 +31,17 @@ export default Home;
 
 const styles = {
   container: {
-    border: '5px solid blue',
+    // border: '5px solid green',
     position: 'relative',
     // background: `url(`../../images/imagetwo.jpg`) no-repeat center center fixed`,
     backgroundSize: 'cover',
-    height: '100vh'
+    height: '100vh',
+    // backgroundColor: '#1e90ff',
+    backgroundColor: 'rgba(31, 180, 255, 1)',
+    color: 'white'
   },
   mainScreen: {
-    border: '3px solid red',
+    // border: '3px solid red',
     width: '100%',
     height: '100vh'
   },

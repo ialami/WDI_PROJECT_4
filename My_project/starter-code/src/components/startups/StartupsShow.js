@@ -58,7 +58,7 @@ export default class StartupShow extends Component {
   }
 
   render(){
-    console.log(this.state);
+    // console.log(this.state);
     return(
       <div>
         { ( this.state.startup && this.state.byUser ) && <Startup {...this.state.startup} deleteStartup={this.deleteStartup} user={this.state.byUser}/> }

@@ -17,15 +17,17 @@ function usersShow(req, res) {
   User
     .findById(req.params.id)
     .populate('startups sentRequests receivedRequests')
-    .fill('friends pendingReceivedRequests')
+    .fill('friends pendingReceivedRequests pendingSentRequests')
     .exec()
     .then(user => {
       if (!user) return res.status(404).json({ message: 'User not found.' });
       console.log('usersShow Controller >> user is:', user);
-      //HERE: loop through ids to get common friends
       return res.status(200).json(user);
     })
-    .catch(() => res.status(500).json({ message: 'Something went wrong.' }));
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ message: 'Something went wrong.' });
+    });
 }
 
 function usersUpdate(req, res, next) {

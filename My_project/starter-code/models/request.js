@@ -18,10 +18,6 @@ const requestSchema = new mongoose.Schema({
     required: true,
     default: 'pending'
   }
-  // senderProfile: {
-  //   type: Object
-  //   required: true
-  // }
 });
 
 module.exports = mongoose.model('Request', requestSchema);
