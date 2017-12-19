@@ -4,12 +4,9 @@ import Auth from '../../lib/Auth';
 import { Button, Navbar, NavItem, Nav, NavDropdown, MenuItem, Grid, Row, Col } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import Axios from 'axios';
-import UserSearchBar from './UserSearchBar';
 import _ from 'lodash';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
-import fetch from 'isomorphic-fetch';
-import Promise from 'bluebird';
 
 class Navigationbar extends Component {
 
@@ -17,9 +14,12 @@ class Navigationbar extends Component {
     user: '',
     acceptButton: 'Accept',
     users: '',
-    query: '',
-    selectedOption: '',
-    value: ''
+    query: ''
+  }
+
+  componentDidMount(){
+    this.getCurrentUser();
+    this.getAllUsers();
   }
 
   logout = (e) => {
@@ -30,10 +30,6 @@ class Navigationbar extends Component {
     this.setState({ user: '' });
   }
 
-  userId(){
-    return Auth.getCurrentUser();
-  }
-
   getCurrentUser(){
     const userId = Auth.getCurrentUser();
     Axios
@@ -42,7 +38,6 @@ class Navigationbar extends Component {
       })
       .then(res => {
         this.setState({ user: res.data });
-        // window.location.reload();
       })
       .catch(err => console.error(err));
   }
@@ -54,15 +49,6 @@ class Navigationbar extends Component {
       })
       .then(res => this.setState({ users: res.data }))
       .catch(err => console.error(err));
-  }
-
-  handleSearch = e => {
-    this.setState({ query: e.target.value });
-  }
-
-  componentDidMount(){
-    this.getCurrentUser();
-    this.getAllUsers();
   }
 
   acceptFriend = e => {
@@ -91,30 +77,17 @@ class Navigationbar extends Component {
       })
       .catch(err => console.error(err));
   }
-  //
-  // setSelectedOption = (e) => {
-  //   if (e){
-  //     this.setState({ selectedOption: e.value });
-  //   } else {
-  //     this.setState({ selectedOption: ''});
-  //   }
-  // }
+
+  loadUserPage = (e) => {
+    console.log('e.value', e.value);
+    this.props.history.push(`/users/${e.value}`);
+  }
 
   render(){
-    console.log('user in navbar', this.state.user);
-    // console.log('this.state.user.friends', this.state.user.friends);
-    // console.log('this.state.selectedOption', this.state.selectedOption);
-    // let finalOptions = null;
-    //
-    // if (this.state.users){
-    //   console.log('this.state.users fdfdfd', this.state.users);
-    //   finalOptions = this.state.users.map(user => {
-    //     console.log('user fullname is ', user.fullName);
-    //       return {fullName: user.fullName};
-    //   });
-    // }
-    // console.log('finalOptions', finalOptions);
 
+    const finalOptions = this.state.users && this.state.users.map(user => {
+      return {value: user.id, label: user.fullName};
+    });
 
     return(
       <Navbar inverse collapseOnSelect style={styles.navbar}>
@@ -131,30 +104,11 @@ class Navigationbar extends Component {
             <LinkContainer style={styles.text} to="/startups">
               <NavItem>Explore start-ups !</NavItem>
             </LinkContainer>
-            {/* <NavItem>
-              <UserSearchBar
-                handleSearch={this.handleSearch}
-              />
-            </NavItem> */}
-            {/* { Auth.isAuthenticated() && <NavItem>
-              <Select
-                // multi={this.state.multi}
-                value={this.state.value}
-                onChange={this.onChange}
-                onValueClick={this.gotoUser}
-                valueKey="id"
-                labelKey="login"
-                loadOptions={this.getUsers}
-                style={styles.searchBar}
-                // backspaceRemoves={this.state.backspaceRemoves}
-              />
-            </NavItem> }
             { finalOptions && <Select
               name="users"
-              value={this.state.selectedOption}
-              onChange={this.setSelectedOption}
-              options={finalOptions.fullName}
-            />} */}
+              onChange={this.loadUserPage}
+              options={finalOptions}
+            />}
             { Auth.isAuthenticated() && <LinkContainer to="/inbox"><NavItem>Inbox</NavItem></LinkContainer>
             }
             { Auth.isAuthenticated() && <NavDropdown eventKey={3} title="Notifications" id="basic-nav-dropdown">
@@ -205,10 +159,10 @@ class Navigationbar extends Component {
               <LinkContainer to="/inbox">
                 <MenuItem eventKey={3.1}>Inbox</MenuItem>
               </LinkContainer>
-              <LinkContainer to={`/users/${this.userId()}`}>
+              <LinkContainer to={`/users/${Auth.getCurrentUser()}`}>
                 <MenuItem eventKey={3.2}>Profile page</MenuItem>
               </LinkContainer>
-              <LinkContainer to={`/users/${this.userId()}/edit/password`}>
+              <LinkContainer to={`/users/${Auth.getCurrentUser()}/edit/password`}>
                 <MenuItem eventKey={3.3}>Edit password</MenuItem>
               </LinkContainer>
               <MenuItem divider />

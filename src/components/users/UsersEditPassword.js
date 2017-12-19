@@ -10,12 +10,13 @@ export default class MyProfileEditPassword extends Component {
       oldPassword: '',
       newPassword: '',
       passwordConfirmation: ''
-    }
+    },
+    errors: ''
   }
 
   handleChange = ({ target: { name, value }}) => {
     const passwords = Object.assign( {}, this.state.passwords, { [name]: value });
-    this.setState({ passwords });
+    this.setState({ passwords, error: '' });
   }
 
   handleSubmit = e => {
@@ -27,7 +28,10 @@ export default class MyProfileEditPassword extends Component {
       .then(() =>
         this.props.history.push(`/users/${this.props.match.params.id}`))
       // .then(res => console.log(res))
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err);
+        this.setState({ errors: err.response.data.message });
+      });
   }
 
   render(){
@@ -37,6 +41,7 @@ export default class MyProfileEditPassword extends Component {
           passwords ={this.state.passwords}
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
+          errors={this.state.errors}
         />
       </div>
     );

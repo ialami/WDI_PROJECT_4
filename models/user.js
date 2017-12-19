@@ -30,30 +30,6 @@ userSchema
     localField: '_id',
     foreignField: 'createdBy'
   });
-//
-// userSchema
-//   .fill('myMessages')
-//   .get(getMyMessages);
-//
-// function getMyMessages(next){
-//   this.db.model('Chat')
-//     .find({ _id: { $in: 'users' } }) //how can I get the users from the chat model?
-//     .populate('users')
-//     .exec(next);
-// }
-//
-// function getMyMessages(next){
-//   this.db.model('Chat')
-//     .find({
-//       $or:
-//       [
-//         { users[0]: this._id }, //syntax error
-//         { users[1]: this._id }
-//       ]
-//     })
-//     .populate('users')
-//     .exec(next);
-// }
 
 userSchema
   .virtual('sentRequests', {

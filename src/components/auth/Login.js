@@ -30,7 +30,7 @@ handleSubmit = (e) => {
       this.props.history.push('/');
     })
     .catch(err =>{
-      console.dir(err);
+      console.error(err);
       this.setState({ errors: err.response.data.message });
     });
 }

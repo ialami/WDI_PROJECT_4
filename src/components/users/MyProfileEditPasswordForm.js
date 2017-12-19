@@ -2,7 +2,7 @@ import React from 'react';
 import BackButton from '../utility/BackButton';
 import { FormGroup, FormControl, Grid, Row, Col, Image, Button } from 'react-bootstrap';
 
-const MyProfileEditPasswordForm = ({ handleChange, handleSubmit, passwords }) => {
+const MyProfileEditPasswordForm = ({ handleChange, handleSubmit, passwords, errors }) => {
   return(
     <Grid fluid style={styles.container}>
       <h1 style={styles.title}>Reset password</h1>
@@ -55,6 +55,7 @@ const MyProfileEditPasswordForm = ({ handleChange, handleSubmit, passwords }) =>
                 </button>
               </div>
             </Row>
+            <small>{errors}</small>
           </div>
         </FormGroup>
       </form>

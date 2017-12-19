@@ -21,26 +21,13 @@ export default class UsersShow extends Component {
     status: 'Connect',
     commonFriends: '',
     disabled: ''
-    // Sboolean: false //give it a meaning
   }
 
-// getUser() will slightly change
-/*
-  getUser(){
-    Axios
-      .get(`/api/users/${this.props.match.params.id}`, {
-        headers: { Authorization: `Bearer ${Auth.getToken()}`}
-      })
-      .then(res => this.setState({ user: res.data }))
-      .catch(err => console.error(err));
-  }
-*/
-// No changes
   componentDidMount(){
     this.getUser();
   }
 
-// ---------------------------------------------------------------------
+// MY PROFILE ------------------------------------------------------------------
   deleteStartup = (e) => {
     Axios
       .delete(`/api/startups/${e.target.value}`, {
@@ -74,9 +61,9 @@ export default class UsersShow extends Component {
       .catch(err => console.error(err));
   }
 
-// --------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
-// ---- Any user ------------------------------------------------------------
+// ANY USER --------------------------------------------------------------------
 
 closeModal = () => {
   this.setState({ showModal: false });
@@ -86,7 +73,6 @@ openModal = () => {
   this.setState({ showModal: true });
 }
 
-//this will probably cause an issue
 componentWillUpdate(nextProps) {
   if(nextProps.match.params.id !== this.props.match.params.id) this.getUser(nextProps.match.params.id);
 }
@@ -106,7 +92,6 @@ getUser(id){
     .then(data => this.setState(data))
     .catch(err => console.error(err));
 }
-
 
 handleButtons(){
   const currentUserId = Auth.getCurrentUser();
@@ -238,15 +223,12 @@ handleSubmitRequest = e => {
     .catch(err => console.error(err));
 }
 
-
 // -------------------------------------------------------------------------
 
 
 render(){
 
-console.log('UsersShow.js >> this.state.user', this.state.user);
-
-console.log('fired')
+  // console.log('UsersShow.js >> this.state.user', this.state.user);
 
   const isCurrentUser = this.props.match.params.id === Auth.getCurrentUser() ? true : false;
 

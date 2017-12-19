@@ -61,19 +61,22 @@ function showStartups(req, res) {
 }
 
 function VerifyPassword(req, res, next){
+  // console.log('req.body.passwordConfirmation', req.body.passwordConfirmation);
+
   User
     .findById(req.params.id)
     .exec()
     .then(user => {
 
-      //check if the user knows his old password
       const isOldPasswordRight = user.validatePassword(req.body.oldPassword);
 
       if (isOldPasswordRight) {
         user.password = req.body.newPassword;
-        user.passwordConfirmation = req.body.passwordConfirmation;
+        user._passwordConfirmation = req.body.passwordConfirmation;
+        if (user.password.length < 6) return res.status(500).json({ message: 'Password must be longer than 6 characters.' });
+        if (user.password !== user._passwordConfirmation) return res.status(500).json({ message: 'New passwords do not match. Please try again.' });
         user.save();
-        return res.status(200).json({ user });
+        return res.status(200).json({ message: 'You have successfully updated your password', user });
       } else {
         return res.status(500).json({ message: 'Try again, did you forget your password?' });
       }
