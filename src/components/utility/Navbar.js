@@ -115,7 +115,7 @@ class Navigationbar extends Component {
               <NavItem>Explore start-ups !</NavItem>
             </LinkContainer>
             <NavItem>
-              { finalOptions && <Select
+              { ( Auth.isAuthenticated() && finalOptions ) && <Select
                 name="users"
                 onChange={this.loadUserPage}
                 options={finalOptions}
@@ -126,7 +126,6 @@ class Navigationbar extends Component {
             }
             { Auth.isAuthenticated() && <NavDropdown
               eventKey={3}
-              // title={`Notifications (${(this.state.user.pendingReceivedRequests && this.state.user.pendingReceivedRequests.length > 0) && this.state.user.pendingReceivedRequests.length})`}
               title={numberOfNotifications()}
               id="basic-nav-dropdown"
             >

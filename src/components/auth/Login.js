@@ -13,6 +13,21 @@ export default class Login extends Component {
     errors: ''
   };
 
+/*
+  getCurrentUser(){
+    const userId = Auth.getCurrentUser();
+    Axios
+      .get(`/api/users/${userId}`, {
+        headers: { Authorization: `Bearer ${Auth.getToken()}`}
+      })
+      // .then(res => {
+      //   this.setState({ user: res.data });
+      // })
+      .then(res => res.data)
+      .catch(err => console.error(err));
+  }
+*/
+
 handleChange = ({ target: { name, value } }) => {
   const user = Object.assign({}, this.state.user, { [name]: value });
   this.setState({ user, errors: '' });
@@ -26,6 +41,7 @@ handleSubmit = (e) => {
     .then(res => {
       Auth.saveCurrentUser(res.data.user.id);
       Auth.setToken(res.data.token);
+      // this.getCurrentUser();
       window.location.reload();
       this.props.history.push('/');
     })

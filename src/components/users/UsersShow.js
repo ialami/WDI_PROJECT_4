@@ -61,6 +61,20 @@ export default class UsersShow extends Component {
       .catch(err => console.error(err));
   }
 
+//we pass in the id of the friend
+  deleteFriend = e => {
+    console.log(`Will delete user ${e.target.value}`);
+    Axios
+      .delete(`/api/requests/${e.target.value}/delete`, {
+        headers: {'Authorization': `Bearer ${Auth.getToken()}`}
+      })
+      .then(() => {
+        this.props.history.push(`/users/${this.props.match.params.id}`);
+        this.getUser();
+      })
+      .catch(err => console.error(err));
+  }
+
 // -----------------------------------------------------------------------------
 
 // ANY USER --------------------------------------------------------------------
@@ -246,6 +260,7 @@ render(){
         handleChange={this.handleChange}
         handleSubmit={this.handleSubmit}
         deleteStartup={this.deleteStartup}
+        deleteFriend={this.deleteFriend}
       /> }
       { !isCurrentUser && <UsersProfile
         user={this.state.user}

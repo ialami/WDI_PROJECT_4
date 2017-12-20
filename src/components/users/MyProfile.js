@@ -5,7 +5,7 @@ import Auth from '../../lib/Auth';
 import MyProfileForm from './MyProfileForm';
 import Startup from '../startups/StartupUserShow';
 
-const MyProfile = ({ boolean, user, switchBoolean, handleChange, handleSubmit, deleteStartup }) => {
+const MyProfile = ({ boolean, user, switchBoolean, handleChange, handleSubmit, deleteStartup, deleteFriend }) => {
   return(
     <Grid fluid
       style={styles.grid}
@@ -85,6 +85,16 @@ const MyProfile = ({ boolean, user, switchBoolean, handleChange, handleSubmit, d
                       </button>
                     </div>
                   </LinkContainer>
+                  <div style={styles.buttoncontainer}>
+                    <button
+                      className="btn btn-primary"
+                      style={styles.button}
+                      onClick={deleteFriend}
+                      value={friend.id}
+                    >
+                    Delete Friend
+                    </button>
+                  </div>
                 </div>
               </Col>;
             })}
