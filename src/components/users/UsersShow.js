@@ -16,7 +16,7 @@ export default class UsersShow extends Component {
     showModal: false,
     request: {
       text: '',
-      receiver: this.props.match.params.id
+      receiver: ''
     },
     status: 'Connect',
     commonFriends: '',
@@ -82,7 +82,11 @@ getUser(id){
   const promises = {
     user: Axios.get(`/api/users/${id}`, {
       headers: { Authorization: `Bearer ${Auth.getToken()}`}
-    }).then(res => res.data),
+    }).then(res => {
+      console.log('res.data', res.data);
+      this.setState({ request: { receiver: res.data.id }});
+      return res.data;
+    }),
     commonFriends: Axios.get(`/api/users/commonfriends/${id}`, {
       headers: {'Authorization': `Bearer ${Auth.getToken()}`}
     }).then(res => res.data)
@@ -157,8 +161,9 @@ handleButtons(){
         // style={styles.buttoncontainer}
       >
         <button
-          onClick={this.openModal}
+          // onClick={this.openModal}
           className="btn btn-primary"
+          onClick={this.handleSubmitRequest}
           // style={styles.button}
         >
         Connect
@@ -217,7 +222,7 @@ handleSubmitRequest = e => {
       headers: {'Authorization': `Bearer ${Auth.getToken()}`}
     })
     .then(() => {
-      this.setState({ showModal: false });
+      // this.setState({ showModal: false });
       return this.getUser();
     })
     .catch(err => console.error(err));
@@ -228,7 +233,7 @@ handleSubmitRequest = e => {
 
 render(){
 
-  // console.log('UsersShow.js >> this.state.user', this.state.user);
+  console.log('UsersShow.js >> this.state.user', this.state.user);
 
   const isCurrentUser = this.props.match.params.id === Auth.getCurrentUser() ? true : false;
 

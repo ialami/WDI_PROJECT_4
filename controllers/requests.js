@@ -10,7 +10,7 @@ function addFriend(req, res, next){
     ]})
     .exec()
     .then(requests => {
-      // if (requests.length > 0) return res.status(500).json({ message: 'you cannot add this friend twice' });
+      if (requests.length > 0) return res.status(500).json({ message: 'you cannot add this friend twice' });
       req.body.sender = req.user._id;
 
       return Request

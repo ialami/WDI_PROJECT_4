@@ -60,6 +60,7 @@ class Navigationbar extends Component {
       .then(() => {
         this.setState({ acceptButon: 'Request accepted'});
         console.log('You are now friends');
+        this.getCurrentUser();
       })
       .catch(err => console.error(err));
   }
@@ -73,13 +74,13 @@ class Navigationbar extends Component {
       .then(() => {
         this.setState({ acceptButon: 'Request refused'});
         console.log('You have refused the friend request');
-        window.location.reload();
+        this.getCurrentUser();
       })
       .catch(err => console.error(err));
   }
 
   loadUserPage = (e) => {
-    console.log('e.value', e.value);
+    // console.log('e.value', e.value);
     this.props.history.push(`/users/${e.value}`);
   }
 
@@ -88,6 +89,15 @@ class Navigationbar extends Component {
     const finalOptions = this.state.users && this.state.users.map(user => {
       return {value: user.id, label: user.fullName};
     });
+
+    const numberOfNotifications = () => {
+      console.log('this.state.user.pendingReceivedRequests', this.state.user.pendingReceivedRequests);
+      if (this.state.user.pendingReceivedRequests && this.state.user.pendingReceivedRequests.length > 0 ) {
+        return `Notifications (${this.state.user.pendingReceivedRequests.length})`;
+      } else {
+        return 'Notifications';
+      }
+    };
 
     return(
       <Navbar inverse collapseOnSelect style={styles.navbar}>
@@ -104,15 +114,25 @@ class Navigationbar extends Component {
             <LinkContainer style={styles.text} to="/startups">
               <NavItem>Explore start-ups !</NavItem>
             </LinkContainer>
-            { finalOptions && <Select
-              name="users"
-              onChange={this.loadUserPage}
-              options={finalOptions}
-            />}
+            <NavItem>
+              { finalOptions && <Select
+                name="users"
+                onChange={this.loadUserPage}
+                options={finalOptions}
+                style={styles.searchBar}
+              />}
+            </NavItem>
             { Auth.isAuthenticated() && <LinkContainer to="/inbox"><NavItem>Inbox</NavItem></LinkContainer>
             }
-            { Auth.isAuthenticated() && <NavDropdown eventKey={3} title="Notifications" id="basic-nav-dropdown">
-              { this.state.user.pendingReceivedRequests && this.state.user.pendingReceivedRequests.map(request => <MenuItem key={request.id} style={styles.notificationsMenuItem}>
+            { Auth.isAuthenticated() && <NavDropdown
+              eventKey={3}
+              // title={`Notifications (${(this.state.user.pendingReceivedRequests && this.state.user.pendingReceivedRequests.length > 0) && this.state.user.pendingReceivedRequests.length})`}
+              title={numberOfNotifications()}
+              id="basic-nav-dropdown"
+            >
+              { this.state.user.pendingReceivedRequests && this.state.user.pendingReceivedRequests.map(request => <MenuItem   key={request.id}
+                style={styles.notificationsMenuItem}
+              >
                 <Grid fluid>
                   <hr style={styles.lineBreak}></hr>
                   <Row div={styles.notificationsRow}>
