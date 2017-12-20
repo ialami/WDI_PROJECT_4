@@ -91,7 +91,6 @@ class Navigationbar extends Component {
     });
 
     const numberOfNotifications = () => {
-      console.log('this.state.user.pendingReceivedRequests', this.state.user.pendingReceivedRequests);
       if (this.state.user.pendingReceivedRequests && this.state.user.pendingReceivedRequests.length > 0 ) {
         return `Notifications (${this.state.user.pendingReceivedRequests.length})`;
       } else {

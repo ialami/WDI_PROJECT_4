@@ -1,28 +1,15 @@
 import React from 'react';
 import { Grid, Row, Col, Image, Button } from 'react-bootstrap';
 import Auth from '../../lib/Auth';
-// import { LinkContainer } from 'react-router-bootstrap';
 
-const Message = ({ users, id, selectChat }) => {
-  const userId = Auth.getCurrentUser();
-  const user = users.find(user => user.id !== userId);
+const Message = ({ content, id, loadChatBox, sender, createdAt }) => {
+
+  // const align = sender.id === Auth.getCurrentUser() ? {styles.right} :
+
   return(
-    <Grid fluid>
-      <Row>
-        <Col
-          lg={12} md={12} sm={12}
-        >
-          <div style={styles.buttoncontainer}>
-            <button
-              onClick={selectChat}
-              value={id}
-              style={styles.button}
-            >
-              {user.fullName}
-            </button>
-          </div>
-        </Col>
-      </Row>
+    <Grid fluid style={styles.grid}>
+      <p style={styles.sender}>{sender.fullName}<p style={styles.createdAt}>{createdAt}</p></p>
+      <p style={styles.content}>{content}</p>
     </Grid>
   );
 };
@@ -30,22 +17,24 @@ const Message = ({ users, id, selectChat }) => {
 export default Message;
 
 const styles = {
-  buttoncontainer: {
-    textAlign: 'center',
-    margin: '10px auto',
-    alignItems: 'center',
-    justifyContent: 'center'
-    // margin: 'auto',
-    // border: '2px solid yellow'
-  },
-  button: {
-    width: '100%',
+  grid: {
+    // border: '3px solid red',
+    // float: 'right',
     color: 'black',
-    backgroundColor: 'white',
-    fontSize: '15',
-    fontWeight: 'bold',
-    margin: 'auto',
-    alignItems: 'center',
-    justifyContent: 'center'
+    marginTop: '5px'
+  },
+  content: {
+    fontWeight: 'bold'
+  },
+  sender: {
+    fontSize: '10px',
+    padding: '0'
+  },
+  right: {
+
+  },
+  createdAt: {
+    fontSize: '8px',
+    padding: '0'
   }
 };

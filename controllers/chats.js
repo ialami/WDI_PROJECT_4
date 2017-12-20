@@ -17,7 +17,7 @@ function chatsIndex(req, res, next){
 // POST /chats/:receiverId
 function chatsCreate(req, res, next){
   req.body.users = [req.user._id, req.params.receiverId];
-
+console.log('chatsCreate/req.body', req.body)
   Chat
     .create(req.body)
     .then(message => res.status(201).json(message))
