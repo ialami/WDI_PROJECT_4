@@ -52,7 +52,7 @@ const startupSchema = new mongoose.Schema({
   }
 });
 
-// remove for everyone good for favourite
+// remove for everyone, good for favourite
 // startupSchema.post('remove', (doc) => {
 //   this.model('User').update({startups: { $in: [doc._id] }}, {
 //     $pull: { startups: doc._id }

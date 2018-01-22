@@ -17,7 +17,7 @@ function chatsIndex(req, res, next){
 // POST /chats/:receiverId
 function chatsCreate(req, res, next){
   req.body.users = [req.user._id, req.params.receiverId];
-console.log('chatsCreate/req.body', req.body)
+
   Chat
     .create(req.body)
     .then(message => res.status(201).json(message))
@@ -40,6 +40,7 @@ function chatsShow(req, res, next){
 
 // POST /chats/:chatId/message
 function messageCreate(req, res, next){
+
   Chat
     .findById(req.params.chatId)
     .populate('users messages.sender')
@@ -47,6 +48,8 @@ function messageCreate(req, res, next){
     .then(chat => {
       req.body.sender = req.user;
       chat.messages.push(req.body);
+      // chat.messages.concat([req.body]);
+      console.log('chat.messages', chat.messages);
       return chat.save();
     })
     .then(chat => {
@@ -72,7 +75,6 @@ function messageDelete(req, res, next){
 }
 
 // DELETE /chats/:chatId
-
 function chatDelete(req, res, next){
 
   Chat
@@ -83,7 +85,6 @@ function chatDelete(req, res, next){
       const userId = req.user._id.toString();
       if(!chat.users.toString().includes(userId)) return res.unauthorized();
       chat.remove();
-      //when I make a get req again it doesn't return chat not found
     })
     .then(() => res.status(204).end())
     .catch(next);

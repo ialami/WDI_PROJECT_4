@@ -10,6 +10,10 @@ const chatSchema = new mongoose.Schema({
   messages: [Message]
 });
 
+// Unknown modifier: $pushAll
+// https://github.com/Automattic/mongoose/issues/5574
+chatSchema.set('usePushEach', true);
+
 function mustBeTwo(){
   const self = this;
   return self.users.length === 2;

@@ -19,7 +19,7 @@ function login(req, res, next) {
     .findOne({ email: req.body.email })
     .populate('startups sentRequests receivedRequests')
     .fill('friends pendingReceivedRequests')
-    .then((user) => {
+    .then(user => {
 
       if(!user || !user.validatePassword(req.body.password)) return res.status(401).json({ message: 'Incorrect credentials.' });
 

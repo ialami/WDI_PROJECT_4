@@ -53,5 +53,7 @@
     "url-loader": "^0.5.9",
     "webpack": "^3.3.0",
     "webpack-dev-server": "^2.5.1"
-  }
+  },
+  "repository": "git@github.com:ialami/WDI_PROJECT_4.git",
+  "author": "ismail alami <alami.ismail_1995@yahoo.fr>"
 }

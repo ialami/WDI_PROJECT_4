@@ -3,8 +3,8 @@ const app             = express();
 
 const http            = require('http');
 const cors            = require('cors');
-const server     = http.createServer(app);
-const sockets    = require('./lib/sockets');
+const server          = http.createServer(app);
+const sockets         = require('./lib/sockets');
 
 sockets.connect(server);
 

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Grid, Row, Col, Image, Button } from 'react-bootstrap';
+import { Grid, Row, Col } from 'react-bootstrap';
+
 import MessagesAside from './MessagesAside';
 import Message from './Message';
 import InputMessage from './InputMessage';
-// import ChatBox from './ChatBox';
-import Axios from 'axios';
 import Auth from '../../lib/Auth';
+
+import Axios from 'axios';
 import socketIOClient from 'socket.io-client';
 
 class Inbox extends Component {
@@ -19,7 +20,6 @@ class Inbox extends Component {
     },
     friends: [],
     friendName: 'Chatbox'
-    // input: ''
   }
 
   componentDidMount(){
@@ -44,7 +44,6 @@ class Inbox extends Component {
 
   selectChat = (e) => {
     this.setState({ chatbox: this.state.chats.find(chat => chat.id === e.target.value )});
-    console.log('e.target.value', e.target.value);
   }
 
   handleChange = ({ target: { name, value } }) => {
@@ -55,12 +54,11 @@ class Inbox extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const messageId = this.state.chatbox.id;
-    // console.log('messageId', messageId);
+
     Axios
       .post(`/api/chats/${messageId}/message`, this.state.message, {
         headers: {'Authorization': `Bearer ${Auth.getToken()}`}
       })
-      // .then(() => this.getChats())
       .then(res => {
         this.setState({ message: { content: '' } });
         console.log('Message successfully sent', res.data);
@@ -84,7 +82,6 @@ class Inbox extends Component {
   }
 
   loadConversation = e => {
-    // console.log('e.value', e.value);
 
     Axios
       .post(`/api/chats/${e.value}`, null, {
@@ -95,17 +92,9 @@ class Inbox extends Component {
   }
 
   render(){
-    // console.log('this.state.chatbox', this.state.chatbox);
-    // console.log('this.state.chats', this.state.chats);
-    // console.log('this.state.friends', this.state.friends);
 
     const userId = Auth.getCurrentUser();
     const friendName = this.state.chatbox.users && this.state.chatbox.users.find(friend => friend.id !== userId);
-    // console.log('friendName dsadasd', friendName.fullName);
-    // console.log('friendName.label', friendName.label);
-
-
-    // console.log('this.state.chatbox.users', this.state.chatbox.users)
 
     return(
       <Grid fluid style={styles.grid}>

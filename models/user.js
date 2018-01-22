@@ -19,7 +19,8 @@ const userSchema = new mongoose.Schema({
     unique: 'Sorry, this email has already been taken.'
   },
   password: {
-    type: String, required: 'Please provide a password'
+    type: String,
+    required: 'Please provide a password'
   }
   // messages: [Chat]
 });
